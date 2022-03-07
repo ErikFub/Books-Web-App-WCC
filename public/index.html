@@ -1,0 +1,88 @@
+<HTML>
+
+<HEAD>
+    <TITLE>My Favourite Books</TITLE>
+    <META charset="utf8" />
+    <LINK rel="stylesheet" href="books.css" />
+    <script src="script.js"></script>
+</HEAD>
+
+<BODY>
+    <HEADER>
+        <DIV class="title-frame"></DIV>
+        <DIV id="titlebox">
+            <H1 id="title">My Favourite Books</H1>
+        </DIV>
+        <NAV class="navbar title-frame">
+            <div id="menuicon">&#9776;</div>
+            <ul id="nav-links">
+                <li class="navitem">
+                    <button class="navbutton sn" onclick="toggleSubnav('library')" id="library-bt">Library</button>
+                    <ul class="subnav hidden" id="library-sn">
+                        <li class="sn">All books</li>
+                        <li class="sn">Browse by Category</li>
+                        <li class="sn">My favorites</li>
+                        <li class="sn">Wishlist</li>
+                    </ul>
+                </li>
+                <li class="navitem">
+                    <button class="navbutton sn" onclick="toggleSubnav('collections')" id="collections-bt">Collections</button>
+                    <ul class="subnav hidden" id="collections-sn">
+                        <li class="sn">All collections</li>
+                        <li class="sn">Inspiration</li>
+                        <li class="sn">Creator Selected</li>
+                    </ul>
+                </li>
+                <li class="navitem">
+                    <button class="navbutton sn" onclick="toggleSubnav('loans')" id="loans-bt">Loans</button>
+                    <ul class="subnav hidden" id="loans-sn">
+                        <li class="sn">All</li>
+                        <li class="sn">Overdue</li>
+                        <li class="sn">Current</li>
+                    </ul>
+                </li>
+            </ul>
+            <div id="searchicon">&#x1F50D;</div>
+            <div class="search">
+                <input class="search" type="text" id="search-input" name="search" placeholder="Search Books">
+                <button class="search" onclick="search()">Search</button>
+            </div>
+        </NAV>
+    </HEADER>
+    <div id="sidesection">
+        <ASIDE id="sidebar">
+            <h3>Maria Diniz</h3>
+            <p><a href="">Profile</a></p>
+            <p><a href="">Preferences</a></p>
+            <h3>Categories</h3>
+            <p><a href="">Drama (1)</a></p>
+            <p><a href="">Historical Romance (2)</a></p>
+            <p><a href="">Science Fiction (5)</a></p>
+            <h3>Collections</h3>
+            <p><a href="">Holidays (4)</a></p>
+            <p><a href="">All timers (10)</a></p>
+        </ASIDE>
+        <aside id="wishlist-box">
+            <h3>Wishlist</h3>
+            <ul id="wishlist"></ul>
+        </aside>
+    </div>
+    <SECTION>
+        <ul id="listofbooks">
+        </ul>
+    </SECTION>
+    <FOOTER>
+        <div id="contact">
+            <p>E-mail: <a href="">joe@someemail.somewhere</a></p>
+            <p>Phone: 555 888 333</p>
+            <p>&nbsp;</p>
+        </div>
+        <div id="sections">
+            <p><a href="">Section 1</a></p>
+            <p><a href="">Section 2</a></p>
+            <p><a href="">Section 3</a></p>
+        </div>
+    </FOOTER>
+</BODY>
+
+</HTML>
