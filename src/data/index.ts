@@ -7,7 +7,7 @@ export function getAllBooks(search:string, fn:(books:Book[]) => void) {
               WHERE b.title LIKE '%' || ? || '%'
               `
   const params:string[] = [search]
-  return db.all(sql, params, (err, rows) =>{
+  return db.all(sql, params, (err:any, rows:any) =>{
     if( err ) {
       console.log("error in database: "+err)
       fn([])
@@ -22,7 +22,7 @@ export function getAllBooks(search:string, fn:(books:Book[]) => void) {
 export function getOneBook(id:number, fn:(book:Book|null) => void) {
   const sql = "SELECT * FROM Book WHERE id = ?"
   const params:string[] = [""+id]
-  return db.get(sql, params, (err, row) =>{
+  return db.get(sql, params, (err:any, row:any) =>{
     if( err ) {
       console.log("error in database: "+err)
       fn(null)

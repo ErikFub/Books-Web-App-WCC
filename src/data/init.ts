@@ -4,7 +4,7 @@ import {books} from '../books'
 const sqlite3 = sqlite.verbose()
 
 export const db = new sqlite3.Database("db.sqlite",
-    (err) => {
+    (err:any) => {
         if( err ) {
             console.log(err.message)
             throw err
@@ -17,7 +17,7 @@ CREATE TABLE author(
     name TEXT
 )
 `
-, (dberr) => { if(dberr) {
+, (dberr:any) => { if(dberr) {
                     console.log("Authors' table already created.")
                } else {
                     const insert = 'INSERT INTO author (id,name) VALUES (?,?)'
@@ -35,7 +35,7 @@ CREATE TABLE book(
     numberrating INTEGER
 )
 `
-, (dberr) => { if(dberr) {
+, (dberr:any) => { if(dberr) {
                     console.log("Books' table already created.")
                } else {
                     const insert =
@@ -58,7 +58,7 @@ CREATE TABLE author_book(
 )
 `
 
-, (dberr) => { if(dberr) {
+, (dberr:any) => { if(dberr) {
                   console.log("Book/Author relation table already created.")
                } else {
                     const insert =
