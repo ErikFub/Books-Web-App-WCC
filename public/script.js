@@ -1,13 +1,21 @@
 // Window Functions -----------------------------------------------
 
+function installOtherEventHandlers() {
+    // Events to open and close menus
+
+    // Events to call loadAndFillBooks with a new search value
+}
+
 window.onload = () => {
-    loadBooks()
+    loadBooks();
     const searchInput = document.getElementById("search-input");
     searchInput.addEventListener("keyup", function(event) {
         if (event.key === "Enter") {
             search()
         }
     });
+
+    installOtherEventHandlers()
 }
 
 window.onclick = function(e) {
@@ -20,6 +28,18 @@ window.onclick = function(e) {
             dropdown.classList.add("hidden")
         }
     }
+}
+
+// Add book -----------------------------------------------------------------
+
+function addNewBook() {
+    fetch("/api/books", {
+        method: "POST",
+        headers: {
+            'content-type':'application/json;charset=utf-8'
+        },
+        body: JSON.stringify({title:"Bla"})
+    })
 }
 
 
@@ -113,6 +133,10 @@ function fillBooks(books) {
 }
 
 function loadBooks() {
+    // const query = search != undefined?`?search=${search}`:""
+
+    // fetch('/api/books'+query)
+
     fetch("books.json")
         .then(data => data.json())
         .then(books => fillBooks(books))
