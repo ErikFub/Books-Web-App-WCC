@@ -4,6 +4,8 @@ function installOtherEventHandlers() {
     // Events to open and close menus
 
     // Events to call loadAndFillBooks with a new search value
+
+    // document.getElementById("searchbutton").onclick = applySearch
 }
 
 window.onload = () => {
@@ -133,7 +135,9 @@ function fillBooks(books) {
 }
 
 function loadBooks() {
-    // const query = search != undefined?`?search=${search}`:""
+    // let query = ""
+    // if( search != undefined )
+    // query = `?search=${search}`
 
     // fetch('/api/books'+query)
 
