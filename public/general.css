@@ -1,0 +1,174 @@
+/* ======================== GENERAL =========================*/
+
+* {
+    font-family: sans-serif;
+}
+
+.hidden {
+    display: none;
+}
+
+
+/* ==================== HEADER & NAVBAR =====================*/
+.title-frame {
+    background-color: darkblue;
+    height: 35px;
+    margin: 0;
+}
+
+#titlebox {
+    background-color: blue;
+    color: white;
+    text-align: center;
+    height: 100px;
+    line-height: 100px;
+}
+
+#titlebox > #title {
+    margin: 0;
+    font-size: 40px;
+}
+
+.navbar > * {
+    display: inline-block;
+}
+
+#nav-links {
+    margin: 0;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+
+.navitem {
+    list-style: none;
+    display: inline-block;
+    width: 125px;
+}
+
+.navbutton:hover {
+    font-weight: bold;
+}
+
+li > .clicked {
+    font-weight: bold;
+}
+
+.navbutton {
+    color: white;
+    background-color: darkblue;
+    border: none;
+    font-size: 14px;
+}
+
+.subnav {
+    position: absolute;
+    padding-left: 0;
+    margin-top: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    background-color: rgb(119, 135, 173);
+    border-radius: 0 0 5px 5px;
+    opacity: 0.95;
+    box-shadow: 0 0 8px rgb(100, 101, 109);
+}
+
+.subnav > li {
+    list-style: none;
+    width: 90px;
+    font-size: 12px;
+    padding-top: 15px;
+    color: white;
+    background-color: transparent;
+}
+
+.subnav > li > a {
+    text-decoration: none;
+    color: white;
+}
+
+div.search {
+    padding: 6px;
+    float: right;
+}
+
+input.search {
+    background-color: rgb(238, 243, 255);
+    border: none;
+    border-radius: 2px;
+    padding: 2px;
+}
+
+button.search {
+    background-color: rgb(119, 135, 173);
+    color: white;
+    border: none;
+    padding: 2px 6px;
+    border-radius: 2px;
+}
+
+#searchicon {
+    float: right;
+    margin: 0;
+    padding: 5px;
+}
+
+#menuicon {
+    color: white;
+    margin: 0;
+    padding: 5px;
+}
+
+@media screen and (min-width:703px) {
+    #menuicon {
+        display: none;
+    }
+
+    #searchicon {
+        display: none;
+    }
+}
+
+@media screen and (max-width:703px) {
+    #nav-links { display: none; }
+
+    div.search { display:none }
+}
+
+
+/* ============================ SIDEBOXES ============================*/
+
+#sidesection {
+    float: right;
+}
+
+aside{
+    width: 150px;
+    font-size: 12px;
+    padding: 15px;
+}
+
+aside#sidebar {
+    background-color: lightgoldenrodyellow;
+}
+
+
+/* ============================== FOOTER ========================== */
+
+footer * {
+    color: white;
+}
+
+footer {
+    overflow: hidden;
+    background-color: darkblue;
+    font-size: 10px;
+    width: 100%;
+    bottom: 0;
+}
+
+footer > div#contact, div#sections {
+    float: left;
+    margin-left: 15px;
+}

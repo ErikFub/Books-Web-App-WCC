@@ -4,6 +4,7 @@
     <TITLE>My Favourite Books</TITLE>
     <META charset="utf8" />
     <LINK rel="stylesheet" href="books.css" />
+    <LINK rel="stylesheet" href="general.css" />
     <script src="script.js"></script>
 </HEAD>
 
@@ -17,28 +18,10 @@
             <div id="menuicon">&#9776;</div>
             <ul id="nav-links">
                 <li class="navitem">
-                    <button class="navbutton sn" onclick="toggleSubnav('library')" id="library-bt">Library</button>
-                    <ul class="subnav hidden" id="library-sn">
-                        <li class="sn">All books</li>
-                        <li class="sn">Browse by Category</li>
-                        <li class="sn">My favorites</li>
-                        <li class="sn">Wishlist</li>
-                    </ul>
-                </li>
-                <li class="navitem">
-                    <button class="navbutton sn" onclick="toggleSubnav('collections')" id="collections-bt">Collections</button>
-                    <ul class="subnav hidden" id="collections-sn">
-                        <li class="sn">All collections</li>
-                        <li class="sn">Inspiration</li>
-                        <li class="sn">Creator Selected</li>
-                    </ul>
-                </li>
-                <li class="navitem">
-                    <button class="navbutton sn" onclick="toggleSubnav('loans')" id="loans-bt">Loans</button>
-                    <ul class="subnav hidden" id="loans-sn">
-                        <li class="sn">All</li>
-                        <li class="sn">Overdue</li>
-                        <li class="sn">Current</li>
+                    <button class="navbutton sn" onclick="toggleSubnav('menu')" id="menu-bt">Menu</button>
+                    <ul class="subnav hidden" id="menu-sn">
+                        <li class="sn"><a href="./addbook.html">Add Book</a></li>
+                        <li class="sn"><a href="./statistics.html">Statistics</a></li>
                     </ul>
                 </li>
             </ul>
