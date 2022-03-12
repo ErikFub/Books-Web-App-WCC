@@ -3,8 +3,9 @@
     <HEAD>
         <TITLE>My Favourite Books</TITLE>
         <META charset="utf8" />
-        <LINK rel="stylesheet" href="books.css" />
-        <LINK rel="stylesheet" href="general.css" />
+        <LINK rel="stylesheet" href="./books.css" />
+        <LINK rel="stylesheet" href="./general.css" />
+        <LINK rel="stylesheet" href="./addbook.css" />
         <script src="script.js"></script>
     </HEAD>
     
@@ -20,16 +21,11 @@
                     <li class="navitem">
                         <button class="navbutton sn" onclick="toggleSubnav('menu')" id="menu-bt">Menu</button>
                         <ul class="subnav hidden" id="menu-sn">
-                            <li class="sn"><a href="/addbook.html">Add Book</a></li>
-                            <li class="sn"><a href="/statistics.html">Statistics</a></li>
+                            <li class="sn"><a href="./index.html">List of Books</a></li>
+                            <li class="sn"><a href="./statistics.html">Statistics</a></li>
                         </ul>
                     </li>
                 </ul>
-                <div id="searchicon">&#x1F50D;</div>
-                <div class="search">
-                    <input class="search" type="text" id="search-input" name="search" placeholder="Search Books">
-                    <button class="search" onclick="search()">Search</button>
-                </div>
             </NAV>
         </HEADER>
         <div id="sidesection">
@@ -46,6 +42,35 @@
                 <p><a href="">All timers (10)</a></p>
             </ASIDE>
         </div>
+
+        <H2>Fill in the fields to add a Book to the Database</H2>
+
+        <form>
+            <label for="title">Book Title</label>
+            <input type="text" id="title" name="title">
+
+            <label for="author">Author</label>
+            <input type="text" id="author" name="author">
+            
+            <div id="newfield">
+                <input type="button" value="Add another author" onclick="createNewElement();"/>
+             </div>
+             
+             <div id="newElementId"></div>
+
+            <label for="img">Image Link</label>
+            <input type="text" id="img" name="img">
+
+            <label for="rating">Rating</label>
+            <input type="text" id="rating" name="rating">
+
+            <label for="numberrating">Number of Ratings</label>
+            <input type="text" id="numberrating" name="numberrating">
+
+            <input type="submit" value="Add Book">
+
+        </form>
+
         <SECTION>
             <ul id="listofbooks">
             </ul>
