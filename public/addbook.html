@@ -42,33 +42,29 @@
                 <p><a href="">All timers (10)</a></p>
             </ASIDE>
         </div>
-
         <H2>Fill in the fields to add a Book to the Database</H2>
-
         <form>
-            <label for="title">Book Title</label>
-            <input type="text" id="title" name="title">
+            <label for="title">Book Title:</label>
+            <input type="text" id="title" name="title" placeholder="Title...">
 
-            <label for="author">Author</label>
-            <input type="text" id="author" name="author">
-            
+            <label for="author">Author:</label>
+            <input type="text" id="author" name="author" placeholder="Author(s)...">
+
             <div id="newfield">
                 <input type="button" value="Add another author" onclick="createNewElement();"/>
-             </div>
-             
-             <div id="newElementId"></div>
+                <div id="newElementId"></div>
+            </div>
 
-            <label for="img">Image Link</label>
-            <input type="text" id="img" name="img">
+            <label for="img">Image Link:</label>
+            <input type="text" id="img" name="img" placeholder="https://...">
 
-            <label for="rating">Rating</label>
-            <input type="text" id="rating" name="rating">
+            <label for="rating">Rating (1-5):</label>
+            <input type="text" id="rating" name="rating" placeholder="...">
 
-            <label for="numberrating">Number of Ratings</label>
-            <input type="text" id="numberrating" name="numberrating">
+            <label for="numberrating">Number of Ratings:</label>
+            <input type="text" id="numberrating" name="numberrating" placeholder="...">
 
             <input type="submit" value="Add Book">
-
         </form>
 
         <SECTION>
