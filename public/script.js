@@ -197,3 +197,11 @@ function search(){
         .then(books => filterBooks(books, searchInput))
         .then(filteredBooks => fillBooks(filteredBooks))
 }
+
+
+// Add another author -----------------------------------------------------------
+function createNewElement() {
+	var txtNewInputBox = document.createElement('div');
+	txtNewInputBox.innerHTML = "<input type='text' id='newInputBox'>";
+	document.getElementById("newElementId").appendChild(txtNewInputBox);
+}
