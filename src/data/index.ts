@@ -1,19 +1,63 @@
 import {db} from './init'
 import {books, Book} from '../books'
+/*
+function getAuthors(bookID: number, authors:([]) => void) {
+  const sql = `
+              SELECT a.name
+              FROM author a
+              JOIN author_book ab
+              ON a.id = ab.author_id
+              AND ab.book_id == ?
+  `
+  return db.all(sql, [bookID], (err: any, rows: any) => {
+    if( err ) {
+      console.log("Error in database: "+err)
+      authors([])
+    } else {
+      authors(rows)
+    }
+  })
+}
+*/
 
 export function getAllBooks(search:string, fn:(books:Book[]) => void) {
   const sql = `
-              SELECT * FROM Book b
+              SELECT *
+              FROM book b
               WHERE b.title LIKE '%' || ? || '%'
               `
-  const params:string[] = [search]
-  return db.all(sql, params, (err:any, rows:any) =>{
+  const params: string [] = [search]
+  return db.all(sql, params, (err: any, rows: any) =>{
     if( err ) {
-      console.log("error in database: "+err)
+      console.log("Error in database: "+err)
       fn([])
     } else {
-      console.log(rows)
+      // console.log(rows)
+      rows.forEach((row: any) => {
+        const authors: any = []
+        // const authors: string [] = []
+        const authorsSql = `
+                            SELECT a.name
+                            FROM author a
+                            JOIN author_book ab
+                                 ON a.id = ab.author_id
+                                 AND ab.book_id == ?
+                            `
+        db.each(authorsSql, [row.id], (errA, rowsA) => {
+          if( errA ) {
+            console.log("Error in database: "+errA)
+          } else {
+            // rowsA.forEach((rowA) => {
+              // console.log(rowA.name)
+            //  row.authors.push(rowA.name)
+            // })
+            authors.push(rowsA.name)
+          }
+        });
+        row.authors = authors
+      });
       // Now get the authors for each book and add it to the result
+      // console.log(typeof(rows[0]))
       fn(rows)
     }
   })

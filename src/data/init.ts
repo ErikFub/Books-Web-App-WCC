@@ -4,7 +4,7 @@ import {books} from '../books'
 const sqlite3 = sqlite.verbose()
 
 export const db = new sqlite3.Database("db.sqlite",
-    (err:any) => {
+    (err: any) => {
         if( err ) {
             console.log(err.message)
             throw err

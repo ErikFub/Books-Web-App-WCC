@@ -8,15 +8,15 @@ const port = 8080
 app.use(express.static('public'))
 
 // Getting all books, with search
-app.get('/api/books', (req,res) => {
+app.get('/api/books', (req: any, res: any) => {
     const search:string = ( req.query.search || "" ) as string
-    getAllBooks(search, (data) => { res.send(JSON.stringify(data)) })
+    getAllBooks(search, (data: any) => { res.send(JSON.stringify(data)) })
 })
 
 // Getting one book
-app.get('/api/books/:id', (req,res) => {
+app.get('/api/books/:id', (req: any, res: any) => {
     const bookId = parseInt(req.params.id,10)
-    getOneBook(bookId, (book) => {
+    getOneBook(bookId, (book: any) => {
         if (book != null) res.send(JSON.stringify(book))
         else {
             res.status(404)
@@ -26,11 +26,11 @@ app.get('/api/books/:id', (req,res) => {
 })
 
 // Adding one book
-app.post('/api/books', (req,res) => {
+app.post('/api/books', (req: any, res: any) => {
     console.log('New Books Being added')
     let body = ""
     req
-    .on('data', (data) => body += data)
+    .on('data', (data: any) => body += data)
     .on('end', () => { addOneBook(JSON.parse(body)) })
 })
 
