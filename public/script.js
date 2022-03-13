@@ -20,30 +20,6 @@ window.onload = () => {
     installOtherEventHandlers()
 }
 
-window.onclick = function(e) {
-    if (!e.target.matches('.sn')) {
-        const navItems = ['library', 'collections', 'loans']
-        for (idx in navItems){
-            const button = document.getElementById(navItems[idx] + "-bt")
-            button.classList.remove("clicked")
-            const dropdown = document.getElementById(navItems[idx] + "-sn")
-            dropdown.classList.add("hidden")
-        }
-    }
-}
-
-// Add book -----------------------------------------------------------------
-
-function addNewBook() {
-    fetch("/api/books", {
-        method: "POST",
-        headers: {
-            'content-type':'application/json;charset=utf-8'
-        },
-        body: JSON.stringify({title:"Bla"})
-    })
-}
-
 
 // Bookcard & Wishlist creation ---------------------------------------------
 
@@ -134,14 +110,12 @@ function fillBooks(books) {
     }
 }
 
-function loadBooks() {
-    // let query = ""
-    // if( search != undefined )
-    // query = `?search=${search}`
-
-    // fetch('/api/books'+query)
-
-    fetch("books.json")
+function loadBooks(search) {
+    let query = ""
+    if( search != undefined )
+    query = `?search=${search}`
+    console.log(fetch('/api/books'+query))
+    fetch('/api/books'+query)
         .then(data => data.json())
         .then(books => fillBooks(books))
 }
@@ -167,15 +141,6 @@ function toggleWishlist(bookID){
     toggleWishlistButton(bookID)
 }
 
-
-// (Sub-)Navigation Bar --------------------------------------------------
-
-function toggleSubnav(navID){
-    const button = document.getElementById(navID + "-bt")
-    button.classList.toggle("clicked")
-    const dropdown = document.getElementById(navID + "-sn")
-    dropdown.classList.toggle("hidden")
-}
 
 // Book Search -----------------------------------------------------------
 
