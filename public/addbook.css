@@ -41,7 +41,7 @@ input[type=submit]:hover {
   box-shadow: 0 0 8px rgb(77, 77, 77);
   }
 
-/*Button to add a more authors*/
+/*Button to add more authors*/
 input[type=button] {
   margin-bottom: 15px;
 }

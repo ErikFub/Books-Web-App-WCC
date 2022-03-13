@@ -1,6 +1,7 @@
 // Add book -----------------------------------------------------------------
 
 function addNewBook() {
+    confirm("Book was added to the Database")
     console.log("addNewBook triggered")
     // get array of authors
     let authors = []
