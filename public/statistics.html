@@ -5,6 +5,7 @@
         <META charset="utf8" />
         <LINK rel="stylesheet" href="books.css" />
         <LINK rel="stylesheet" href="general.css" />
+        <LINK rel="stylesheet" href="statistics.css" />
         <script src="script.js"></script>
     </HEAD>
     
@@ -20,16 +21,11 @@
                     <li class="navitem">
                         <button class="navbutton sn" onclick="toggleSubnav('menu')" id="menu-bt">Menu</button>
                         <ul class="subnav hidden" id="menu-sn">
+                            <li class="sn"><a href="/index.html">Menu</a></li>
                             <li class="sn"><a href="/addbook.html">Add Book</a></li>
-                            <li class="sn"><a href="/statistics.html">Statistics</a></li>
                         </ul>
                     </li>
                 </ul>
-                <div id="searchicon">&#x1F50D;</div>
-                <div class="search">
-                    <input class="search" type="text" id="search-input" name="search" placeholder="Search Books">
-                    <button class="search" onclick="search()">Search</button>
-                </div>
             </NAV>
         </HEADER>
         <div id="sidesection">
@@ -47,9 +43,82 @@
             </ASIDE>
         </div>
         <SECTION>
-            <ul id="listofbooks">
-            </ul>
+              <div>
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                <title>Distribution of Number of Books per Rating</title>
+              </div>
+              <body>
+                <div class="chartMenu">
+                </div>
+                <div class="chartCard">
+                  <div class="chartBox">
+                    <canvas id="myChart"></canvas>
+                    <button onclick="fetchData()">Fetch Now</button>
+                  </div>
+                </div>
+                <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                <script>
+
+                // // Fetch Block
+                // function updateChart() {
+                //     async function fetchData() {
+                //         const url = 'http://127.0.0.1:5500/public/books.json';
+                //         const response = await fetch(url);
+                //         // wait until request has been completed
+                //         const datapoints = await response.json();
+                //         console.log(datapoints);
+                //         return datapoints
+                //     };
+                //     fetchData().then(datapoints => {
+                //         const ratings = datapoints.books.map(
+                //             function(index){
+                //                 return index.rating;
+                //         })
+                //         console.log(rating);
+                //         myChart.config.data.datasets.data = rating;
+                //         myChart.updateChart()
+                //     });
+                // };
+
+
+                // setup 
+                const data = {
+                  labels: ['1', '2', '3', '4', '5'],
+                  datasets: [{
+                    label: 'Number of Books per Rating',
+                    data: [2, 3, 5, 3, 1],
+                    backgroundColor: [
+                      'rgba(54, 162, 235, 0.2)'
+                    ],
+                    borderColor: [
+                      'rgba(54, 162, 235, 1)'
+                    ],
+                    borderWidth: 1
+                  }]
+                };
+            
+                // config 
+                const config = {
+                  type: 'bar',
+                  data,
+                  options: {
+                    scales: {
+                      y: {
+                        beginAtZero: true
+                      }
+                    }
+                  }
+                };
+            
+                // render init block
+                const myChart = new Chart(
+                  document.getElementById('myChart'),
+                  config
+                );
+                </script>
         </SECTION>
+      
         <FOOTER>
             <div id="contact">
                 <p>E-mail: <a href="">joe@someemail.somewhere</a></p>
