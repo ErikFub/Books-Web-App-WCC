@@ -1,6 +1,6 @@
 import express from 'express'
 import './data'
-import { addOneBook, getAllBooks, getOneBook } from './data'
+import { addOneBook, getAllBooks, getOneBook, addAuthors, getAllAuthorRelations } from './data'
 
 const app = express()
 const port = 8080
@@ -10,7 +10,13 @@ app.use(express.static('public'))
 // Getting all books, with search
 app.get('/api/books', (req: any, res: any) => {
     const search:string = ( req.query.search || "" ) as string
-    getAllBooks(search, (data: any) => { res.send(JSON.stringify(data)) })
+    getAllBooks(search, (books: any) => {
+        getAllAuthorRelations((authorRelations) => {
+            addAuthors(books, authorRelations, (booksAuthors: any) => {
+                res.send(JSON.stringify(booksAuthors))
+            })
+        })
+    })
 })
 
 // Getting one book

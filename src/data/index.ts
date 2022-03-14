@@ -1,24 +1,39 @@
 import {db} from './init'
 import {books, Book} from '../books'
-/*
-function getAuthors(bookID: number, authors:([]) => void) {
+
+
+export function addAuthors(allBooks: Book[], authorRelations: any, fn:(booksAuthor: Book[]) => void) {
+  const bookAuthors: {[id: number]: string[]} = {}
+  for (const relation of authorRelations) {
+    const author: string = relation.name
+    const bookId: number = relation.book_id
+    if (!(bookId in bookAuthors)) {
+      bookAuthors[bookId] = []
+    }
+    bookAuthors[bookId].push(author)
+  }
+  allBooks.forEach((book) => {
+    book.authors = bookAuthors[book.id]
+  })
+  fn(allBooks)
+}
+
+
+export function getAllAuthorRelations(fn:(authorRelations: any) => void) {
   const sql = `
-              SELECT a.name
-              FROM author a
-              JOIN author_book ab
-              ON a.id = ab.author_id
-              AND ab.book_id == ?
-  `
-  return db.all(sql, [bookID], (err: any, rows: any) => {
+              SELECT ab.book_id, a.name
+              FROM author_book ab
+              LEFT JOIN author a ON a.id = ab.author_id
+              `
+  db.all(sql, [], (err: any, rows: any) =>{
     if( err ) {
       console.log("Error in database: "+err)
-      authors([])
+      fn([])
     } else {
-      authors(rows)
+      fn(rows)
     }
   })
 }
-*/
 
 export function getAllBooks(search:string, fn:(books:Book[]) => void) {
   const sql = `
@@ -32,39 +47,6 @@ export function getAllBooks(search:string, fn:(books:Book[]) => void) {
       console.log("Error in database: "+err)
       fn([])
     } else {
-      rows.forEach((row: any) => {
-        const authors: any = []
-        authors.push("Sample Author")
-        row.authors = authors
-        /*
-        // const authors: string [] = []
-        const authorsSql = `
-                            SELECT a.name
-                            FROM author a
-                            JOIN author_book ab
-                                 ON a.id = ab.author_id
-                                 AND ab.book_id == ?
-                            `
-        db.each(authorsSql, [row.id], (errA, rowsA) => {
-          if( errA ) {
-            console.log("Error in database: "+errA)
-          } else {
-            // rowsA.forEach((rowA) => {
-              // console.log(rowA.name)
-            //  row.authors.push(rowA.name)
-            // })
-            authors.push(rowsA.name)
-          }
-        });
-        row.authors = authors
-        */
-      });
-      // Now get the authors for each book and add it to the result
-      // console.log(typeof(rows[0]))
-      console.log("rows------")
-      console.log(rows)
-      console.log("----------")
-
       fn(rows)
     }
   })
@@ -79,7 +61,6 @@ export function getOneBook(id:number, fn:(book:Book|null) => void) {
       fn(null)
     } else {
       console.log(row)
-      // get the authors of the book and add it to the book
       fn(row)
     }
   })}
