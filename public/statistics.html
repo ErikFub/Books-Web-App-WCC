@@ -3,7 +3,6 @@
     <HEAD>
         <TITLE>My Favourite Books</TITLE>
         <META charset="utf8" />
-        <LINK rel="stylesheet" href="./books.css" />
         <LINK rel="stylesheet" href="./common.css" />
         <LINK rel="stylesheet" href="./statistics.css" />
         <script src="./script.js"></script>
@@ -48,19 +47,25 @@
               <div>
                 <meta charset="utf-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1">
-                <title>Distribution of Number of Books per Rating</title>
+                <title>Charts</title>
               </div>
               <body>
                 <div class="chartMenu">
                 </div>
                 <div class="chartCard">
+
                   <div class="chartBox">
                     <canvas id="myChart"></canvas>
-                    <button onclick="fetchData()">Fetch Now</button>
                   </div>
+
+                  <div class="chartBox">
+                    <canvas id="myChart2"></canvas>
+                  </div>
+
                 </div>
                 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
                 <script>
+
 
                 // // Fetch Block
                 // function updateChart() {
@@ -84,41 +89,109 @@
                 // };
 
 
-                // setup 
-                const data = {
+                // setup Chart
+                const data1 = {
                   labels: ['1', '2', '3', '4', '5'],
                   datasets: [{
                     label: 'Number of Books per Rating',
                     data: [2, 3, 5, 3, 1],
                     backgroundColor: [
-                      'rgba(54, 162, 235, 0.2)'
+                    'rgba(255, 26, 104, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
                     ],
                     borderColor: [
-                      'rgba(54, 162, 235, 1)'
+                    'rgba(255, 26, 104, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
                     ],
                     borderWidth: 1
                   }]
                 };
-            
-                // config 
+
+                // config Chart
                 const config = {
                   type: 'bar',
-                  data,
+                  data: data1,
                   options: {
                     scales: {
                       y: {
                         beginAtZero: true
                       }
+                    },
+                    plugins: {
+                      legend: {
+                        display: false
+                      },
+                      title: {
+                        display: true,
+                        text: 'Distribution of Books per Rating'
+                      }
                     }
                   }
                 };
-            
-                // render init block
+
+                // render init block Chart
                 const myChart = new Chart(
                   document.getElementById('myChart'),
                   config
                 );
+
+
+                // setup Chart2
+                const data2 = {
+                  labels: ['Author1', 'Author2', 'Author3'],
+                  datasets: [{
+                    label: 'Number of Books per Author',
+                    data: [5, 3, 1],
+                    backgroundColor: [
+                      'rgba(20, 20, 235, 0.5)',
+                      'rgba(20, 100, 235, 0.5)',
+                      'rgba(20, 180, 235, 0.5)',
+                    ],
+                    borderColor: [
+                      'rgba(20, 20, 235, 1)',
+                      'rgba(20, 100, 235, 1)',
+                      'rgba(20, 180, 235, 1)',
+                    ],
+                    borderWidth: 1
+                  }]
+                };
+
+                // config Chart2
+                const config2 = {
+                  type: 'bar',
+                  data: data2,
+                  options: {
+                      indexAxis: 'y',
+                      scales: {
+                        y: {
+                          beginAtZero: true
+                      }
+                    },
+                    plugins: {
+                      legend: {
+                        display: false
+                      },
+                      title: {
+                        display: true,
+                        text: 'Number of Books per Top 3 Authors'
+                      }
+                    }
+                  }
+                };
+
+                // render init block Chart2
+                const myChart2 = new Chart(
+                  document.getElementById('myChart2'),
+                  config2
+                );
                 </script>
+
         </SECTION>
       
         <FOOTER>
