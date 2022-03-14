@@ -1,6 +1,6 @@
 import express from 'express'
 import './data'
-import { addOneBook, getAllBooks, getOneBook, addAuthors, getAllAuthorRelations } from './data'
+import { addOneBook, getAllBooks, getOneBook, addAuthors, getAllAuthorRelations, getAllAuthors, getAllCategories } from './data'
 
 const app = express()
 const port = 8080
@@ -39,6 +39,22 @@ app.post('/api/books', (req: any, res: any) => {
     .on('data', (data: any) => body += data)
     .on('end', () => { addOneBook(JSON.parse(body)) })
 })
+
+// Getting all categories
+app.get('/api/categories', (req: any, res: any) => {
+    getAllCategories((data: any) => {
+        res.send(JSON.stringify(data))
+    })
+})
+
+
+// Getting all authors
+app.get('/api/authors', (req: any, res: any) => {
+    getAllAuthors((data: any) => {
+        res.send(JSON.stringify(data))
+    })
+})
+
 
 app.listen( port, () => {
     console.log( `server started at http://localhost:${ port }` );

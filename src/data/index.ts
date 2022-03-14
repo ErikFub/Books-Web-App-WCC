@@ -66,31 +66,6 @@ export function getOneBook(id:number, fn:(book:Book|null) => void) {
   })}
 
 
-// works as intended
-function getBookIds(callback: any) {
-    const data: any = []; // for storing the rows.
-    db.each("SELECT id FROM book", (err, row) => {
-      data.push(row); // pushing rows into array
-    }, () => { // calling function when all rows have been pulled
-      callback(data);
-    });
-}
-
-function getHighestBookId() {
-  const bookIds = getBookIds((data: []) => {
-    console.log("Book ID data ---")
-    console.log(data)
-    console.log("----------------")
-
-    return data
-  })
-  console.log("Book IDs:")
-  console.log(bookIds)
-  console.log("--")
-  // return Math.max(bookIds)
-}
-
-
 export function addOneBook(b: Book) {
   console.log("In addOneBook:------")
   console.log(b)
@@ -108,4 +83,36 @@ export function addOneBook(b: Book) {
   // insert one new book into the database
   // Don't forget to add the relation to authors
   // The relation to authors is established using the author identifiers
+}
+
+export function getAllAuthors(fn:(authors: string[]) => void) {
+  const sql = `
+              SELECT DISTINCT id, name
+              FROM author
+              ORDER BY name
+              `
+  db.all(sql, [], (err: any, rows: any) =>{
+    if( err ) {
+      console.log("Error in database: "+err)
+      fn([])
+    } else {
+      fn(rows)
+    }
+  })
+}
+
+export function getAllCategories(fn:(categories: string[]) => void) {
+  const sql = `
+              SELECT DISTINCT (category)
+              FROM book
+              ORDER BY category
+              `
+  db.all(sql, [], (err: any, rows: any) =>{
+    if( err ) {
+      console.log("Error in database: "+err)
+      fn([])
+    } else {
+      fn(rows)
+    }
+  })
 }
