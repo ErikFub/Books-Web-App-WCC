@@ -10,6 +10,7 @@ function installOtherEventHandlers() {
 
 window.onload = () => {
     loadBooks();
+    loadCategories();
     const searchInput = document.getElementById("search-input");
     searchInput.addEventListener("keyup", function(event) {
         if (event.key === "Enter") {
@@ -110,10 +111,14 @@ function fillBooks(books) {
     }
 }
 
-function loadBooks(search) {
+function loadBooks(name, category) {
     let query = ""
-    if( search != undefined )
-    query = `?search=${search}`
+    if( name != undefined ) {
+        query = `?name=${name}`
+    }
+    if( category != undefined ) {
+        query = `?category=${category}`
+    }
     console.log(fetch('/api/books'+query))
     fetch('/api/books'+query)
         .then(data => data.json())
@@ -157,8 +162,42 @@ function filterBooks(books, searchInput){
 
 function search(){
     const searchInput = document.getElementById('search-input').value
-    fetch("books.json")
+    fetch('/api/books')
         .then(data => data.json())
         .then(books => filterBooks(books, searchInput))
         .then(filteredBooks => fillBooks(filteredBooks))
+}
+
+
+// Sidebar Categories ---------------------------------------------------
+
+function fillCategories(categories) {
+    const categoriesElement = document.getElementById("categories")
+    for (let category in categories) {
+        count = categories[category]
+        const catP = document.createElement("p")
+        catP.onclick = function() {loadBooks(undefined, category=category)}
+        catP.innerHTML = category + " (" + count + ")"
+        categoriesElement.append(catP)
+    }
+}
+
+function countCategories(books) {
+    const allCategories = {}
+    for (idx in books) {
+        const book = books[idx]
+        const bookCategory = book.category
+        if (! (bookCategory in allCategories)){
+            allCategories[bookCategory] = 0
+        }
+        allCategories[bookCategory] += 1
+    }
+    return allCategories
+}
+
+function loadCategories(){
+    fetch('/api/books')
+        .then(data => data.json())
+        .then(books => countCategories(books))
+        .then(categories => fillCategories(categories))
 }

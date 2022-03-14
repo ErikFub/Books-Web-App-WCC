@@ -27,7 +27,7 @@ export function getAllAuthorRelations(fn:(authorRelations: any) => void) {
               `
   db.all(sql, [], (err: any, rows: any) =>{
     if( err ) {
-      console.log("Error in database: "+err)
+      console.log("Error in database: " + err)
       fn([])
     } else {
       fn(rows)
@@ -35,16 +35,17 @@ export function getAllAuthorRelations(fn:(authorRelations: any) => void) {
   })
 }
 
-export function getAllBooks(search:string, fn:(books:Book[]) => void) {
+export function getAllBooks(name: string, category: string, fn:(books:Book[]) => void) {
   const sql = `
               SELECT *
               FROM book b
               WHERE b.title LIKE '%' || ? || '%'
+                AND b.category LIKE '%' || ? || '%'
               `
-  const params: string [] = [search]
+  const params: string [] = [name, category]
   db.all(sql, params, (err: any, rows: any) =>{
     if( err ) {
-      console.log("Error in database: "+err)
+      console.log("Error in database: " + err)
       fn([])
     } else {
       fn(rows)
@@ -57,7 +58,7 @@ export function getOneBook(id:number, fn:(book:Book|null) => void) {
   const params:string[] = [""+id]
   return db.get(sql, params, (err:any, row:any) =>{
     if( err ) {
-      console.log("error in database: "+err)
+      console.log("error in database: " + err)
       fn(null)
     } else {
       console.log(row)
@@ -93,7 +94,7 @@ export function getAllAuthors(fn:(authors: string[]) => void) {
               `
   db.all(sql, [], (err: any, rows: any) =>{
     if( err ) {
-      console.log("Error in database: "+err)
+      console.log("Error in database: " + err)
       fn([])
     } else {
       fn(rows)
@@ -109,7 +110,7 @@ export function getAllCategories(fn:(categories: string[]) => void) {
               `
   db.all(sql, [], (err: any, rows: any) =>{
     if( err ) {
-      console.log("Error in database: "+err)
+      console.log("Error in database: " + err)
       fn([])
     } else {
       fn(rows)

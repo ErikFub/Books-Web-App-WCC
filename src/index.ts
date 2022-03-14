@@ -9,8 +9,9 @@ app.use(express.static('public'))
 
 // Getting all books, with search
 app.get('/api/books', (req: any, res: any) => {
-    const search:string = ( req.query.search || "" ) as string
-    getAllBooks(search, (books: any) => {
+    const name: string = ( req.query.name || "" ) as string
+    const category: string = (req.query.name || "") as string
+    getAllBooks(name, category, (books: any) => {
         getAllAuthorRelations((authorRelations) => {
             addAuthors(books, authorRelations, (booksAuthors: any) => {
                 res.send(JSON.stringify(booksAuthors))
