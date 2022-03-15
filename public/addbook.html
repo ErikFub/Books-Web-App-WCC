@@ -45,9 +45,9 @@
 
         <SECTION>
         <H2>Fill in the fields to add a Book to the Database</H2>
-        <form>
+        <form action="./index.html">
             <label for="title">Book Title:</label>
-            <input type="text" id="booktitle" name="title" placeholder="Title..." required>
+            <input type="text" id="booktitle" placeholder="Title..." required>
 
             <div>
                 <label for="dropdown">Select a Author:</label><br>
@@ -57,19 +57,19 @@
             </div>
 
             <br><label for="img">Image Link:</label>
-            <input type="text" id="image" name="img" placeholder="https://..." required>
+            <input type="text" id="image" placeholder="https://..." required>
 
             <label for="rating">Rating (1-5):</label>
-            <input type="text" id="rating" name="rating" placeholder="..." required>
+            <input type="text" id="rating" placeholder="..." required>
 
             <label for="numberrating">Number of Ratings:</label>
-            <input type="text" id="numberrating" name="numberrating" placeholder="..." required>
+            <input type="text" id="numberrating" placeholder="..." required>
 
             <label for="dropdown">Category:</label><br>
-            <select name="dropdown" id="categorydropdown">
+            <select id="categorydropdown">
                 <option value="New Category">New Category</option>
             </select>
-            <input type="text" id="newcategory" name="category" placeholder="New Category...">
+            <input type="text" id="newcategory" placeholder="New Category...">
             <br>
             <input type="submit" onclick="addNewBook();" value="Add Book" >
         </form>
