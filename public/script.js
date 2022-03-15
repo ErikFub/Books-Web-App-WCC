@@ -10,6 +10,7 @@ function installOtherEventHandlers() {
 
 window.onload = () => {
     loadBooks();
+    loadCategories();
     const searchInput = document.getElementById("search-input");
     searchInput.addEventListener("keyup", function(event) {
         if (event.key === "Enter") {
@@ -110,10 +111,15 @@ function fillBooks(books) {
     }
 }
 
-function loadBooks(search) {
+function loadBooks(name) {
     let query = ""
-    if( search != undefined )
-    query = `?search=${search}`
+    if( name != undefined ) {
+        query = `?name=${name}`
+    }
+    const category = getParameterByName("category")
+    if( category != undefined ) {
+        query = `?category=${category}`
+    }
     console.log(fetch('/api/books'+query))
     fetch('/api/books'+query)
         .then(data => data.json())
@@ -157,8 +163,21 @@ function filterBooks(books, searchInput){
 
 function search(){
     const searchInput = document.getElementById('search-input').value
-    fetch("books.json")
+    fetch('/api/books')
         .then(data => data.json())
         .then(books => filterBooks(books, searchInput))
         .then(filteredBooks => fillBooks(filteredBooks))
 }
+
+
+// URL Query Handling -----------------------------------------------------------
+
+function getParameterByName(name, url = window.location.href) {
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
