@@ -1,3 +1,11 @@
+// Event Handlers -----------------------------------------------------------
+
+window.onload = () => {
+    loadCategories();
+}
+
+// Statistics ---------------------------------------------------------------
+
 // function getCount(group) {
 //     var count = 0;
 //     for (var i = 0; i < obj.data.length; i++) {

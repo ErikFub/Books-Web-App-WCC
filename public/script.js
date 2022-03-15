@@ -111,11 +111,12 @@ function fillBooks(books) {
     }
 }
 
-function loadBooks(name, category) {
+function loadBooks(name) {
     let query = ""
     if( name != undefined ) {
         query = `?name=${name}`
     }
+    const category = getParameterByName("category")
     if( category != undefined ) {
         query = `?category=${category}`
     }
@@ -169,35 +170,14 @@ function search(){
 }
 
 
-// Sidebar Categories ---------------------------------------------------
+// URL Query Handling -----------------------------------------------------------
 
-function fillCategories(categories) {
-    const categoriesElement = document.getElementById("categories")
-    for (let category in categories) {
-        count = categories[category]
-        const catP = document.createElement("p")
-        catP.onclick = function() {loadBooks(undefined, category=category)}
-        catP.innerHTML = category + " (" + count + ")"
-        categoriesElement.append(catP)
-    }
+function getParameterByName(name, url = window.location.href) {
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
 
-function countCategories(books) {
-    const allCategories = {}
-    for (idx in books) {
-        const book = books[idx]
-        const bookCategory = book.category
-        if (! (bookCategory in allCategories)){
-            allCategories[bookCategory] = 0
-        }
-        allCategories[bookCategory] += 1
-    }
-    return allCategories
-}
-
-function loadCategories(){
-    fetch('/api/books')
-        .then(data => data.json())
-        .then(books => countCategories(books))
-        .then(categories => fillCategories(categories))
-}
