@@ -49,24 +49,34 @@
         <H2>Fill in the fields to add a Book to the Database</H2>
         <form>
             <label for="title">Book Title:</label>
-            <input type="text" id="booktitle" name="title" placeholder="Title...">
+            <input type="text" id="booktitle" name="title" placeholder="Title..." required>
 
-            <label for="author">Author:</label>
-            <input type="text" id="author" name="author" class="author" placeholder="Author(s)...">
+            <div>
+                <label for="dropdown">Select a Author:</label><br>
+                <select name="dropdown" id="multipleauthors">
+                    <option value="getauthors"></option>
 
-            <div id="newfield">
-                <input type="button" value="Add another author" onclick="createNewElement();"/>
+                </select>
+                <input type="button" id="newauthor" value="Add another Author" onclick="createNewElement();"/>
                 <div id="newElementId"></div>
             </div>
 
             <label for="img">Image Link:</label>
-            <input type="text" id="image" name="img" placeholder="https://...">
+            <input type="text" id="image" name="img" placeholder="https://..." required>
 
             <label for="rating">Rating (1-5):</label>
-            <input type="text" id="rating" name="rating" placeholder="...">
+            <input type="text" id="rating" name="rating" placeholder="..." required>
 
             <label for="numberrating">Number of Ratings:</label>
-            <input type="text" id="numberrating" name="numberrating" placeholder="...">
+            <input type="text" id="numberrating" name="numberrating" placeholder="..." required>
+
+            <label for="dropdown">Category:</label><br>
+            <select name="dropdown" id="category_dropdown">
+                <option value="newcategory">New Category</option>
+                <option value="drama">Drama</option>
+                <option value="romance">Romance</option>
+            </select>
+            <input type="text" id="category" name="category" placeholder="New Category...">
 
             <input type="submit" onclick="addNewBook();" value="Add Book" > -->
             <!-- <button type='button' onclick="addNewBook();">Add Book</button> -->

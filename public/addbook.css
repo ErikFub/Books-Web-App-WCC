@@ -46,8 +46,6 @@ input[type=button] {
   margin-bottom: 15px;
 }
 
-input[type=button]:hover {
-  background-color: whitesmoke;
-  box-shadow: 0 0 8px rgb(77, 77, 77);
-  border-radius: 4px;
-  }
+#newauthor {
+  float: left;
+}

@@ -1,7 +1,7 @@
 // Add book -----------------------------------------------------------------
 
 function addNewBook() {
-    confirm("Book was added to the Database")
+    //confirm("Book was added to the Database")
     console.log("addNewBook triggered")
     // get array of authors
     let authors = []
@@ -33,6 +33,24 @@ function addNewBook() {
 // Add another author -----------------------------------------------------------
 function createNewElement() {
 	var txtNewInputBox = document.createElement('div');
-	txtNewInputBox.innerHTML = "<input type='text' id='newInputBox'>";
+	txtNewInputBox.innerHTML = "<select> <option value='test'>Test</option>";
 	document.getElementById("newElementId").appendChild(txtNewInputBox);
 }
+
+// Loading the Data ------------------------------------------------------------
+function fillAuthors(books) {
+    const listofauthors = document.getElementById("getauthors")
+    listofauthors.innerHTML = ''
+    for(let i=0; i<books.length; i++){
+        const author = books[i]
+        listofauthors.append(author)
+    }
+}
+
+function loadAuthors(){
+    console.log(fetch('/api/authors'))
+    fetch('/api/authors')
+        .then(data => data.json())
+        .then(books => fillAuthors(books))
+        }
+
