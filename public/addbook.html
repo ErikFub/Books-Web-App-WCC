@@ -51,15 +51,16 @@
 
             <div>
                 <label for="dropdown">Select a Author:</label><br>
-                <select name="dropdown" id="multipleauthors">
-                    <option value="getauthors"></option>
-
+                
+                <select name="dropdown" id="multipleauthors"><br>
+                    <option id="getauthors">Test</option>
                 </select>
-                <input type="button" id="newauthor" value="Add another Author" onclick="createNewElement();"/>
+
+                <input type="button" id="newauthor" value="Add another Author" onclick="createNewElement();"/><br><br>
                 <div id="newElementId"></div>
             </div>
 
-            <label for="img">Image Link:</label>
+            <br><label for="img">Image Link:</label>
             <input type="text" id="image" name="img" placeholder="https://..." required>
 
             <label for="rating">Rating (1-5):</label>

@@ -49,3 +49,7 @@ input[type=button] {
 #newauthor {
   float: left;
 }
+
+#multipleauthors {
+  display: block;
+}

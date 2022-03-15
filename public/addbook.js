@@ -37,6 +37,7 @@ function addNewBook() {
     })
 }
 
+
 // Add another author -----------------------------------------------------------
 function createNewElement() {
 	var txtNewInputBox = document.createElement('div');
@@ -44,20 +45,20 @@ function createNewElement() {
 	document.getElementById("newElementId").appendChild(txtNewInputBox);
 }
 
+
 // Loading the Data ------------------------------------------------------------
 function fillAuthors(books) {
     const listofauthors = document.getElementById("getauthors")
     listofauthors.innerHTML = ''
     for(let i=0; i<books.length; i++){
-        const author = books[i]
+        const author = books[i].author
         listofauthors.append(author)
     }
 }
 
 function loadAuthors(){
-    console.log(fetch('/api/authors'))
-    fetch('/api/authors')
+    fetch('/api/books')
         .then(data => data.json())
         .then(books => fillAuthors(books))
         }
-
+ 
