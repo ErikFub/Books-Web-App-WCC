@@ -5,6 +5,7 @@
         <META charset="utf8" />
         <LINK rel="stylesheet" href="./common.css" />
         <LINK rel="stylesheet" href="./statistics.css" />
+        <script src="./script.js"></script>
         <script src="./common.js"></script>
         <script src="./statistics.js"></script>
     </HEAD>
@@ -63,130 +64,131 @@
                 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
                 <script>
 
+                function buildRatingsChart(books){
+                  const ratingCount = getCount(books, 'rating')
+                  const data1 = {
+                    labels: Object.keys(ratingCount),
+                    datasets: [{
+                      label: 'Number of Books',
+                      data: Object.values(ratingCount),
+                      backgroundColor: [
+                      'rgba(255, 26, 104, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(255, 206, 86, 0.2)',
+                      'rgba(75, 192, 192, 0.2)',
+                      'rgba(153, 102, 255, 0.2)',
+                      ],
+                      borderColor: [
+                      'rgba(255, 26, 104, 1)',
+                      'rgba(54, 162, 235, 1)',
+                      'rgba(255, 206, 86, 1)',
+                      'rgba(75, 192, 192, 1)',
+                      'rgba(153, 102, 255, 1)',
+                      ],
+                      borderWidth: 1
+                    }]
+                  };
 
-                // // Fetch Block
-                // function updateChart() {
-                //     async function fetchData() {
-                //         const url = 'http://127.0.0.1:5500/public/books.json';
-                //         const response = await fetch(url);
-                //         // wait until request has been completed
-                //         const datapoints = await response.json();
-                //         console.log(datapoints);
-                //         return datapoints
-                //     };
-                //     fetchData().then(datapoints => {
-                //         const ratings = datapoints.books.map(
-                //             function(index){
-                //                 return index.rating;
-                //         })
-                //         console.log(rating);
-                //         myChart.config.data.datasets.data = rating;
-                //         myChart.updateChart()
-                //     });
-                // };
-
-
-                // setup Chart
-                const data1 = {
-                  labels: ['1', '2', '3', '4', '5'],
-                  datasets: [{
-                    label: 'Number of Books per Rating',
-                    data: [2, 3, 5, 3, 1],
-                    backgroundColor: [
-                    'rgba(255, 26, 104, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    ],
-                    borderColor: [
-                    'rgba(255, 26, 104, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    ],
-                    borderWidth: 1
-                  }]
-                };
-
-                // config Chart
-                const config = {
-                  type: 'bar',
-                  data: data1,
-                  options: {
-                    scales: {
-                      y: {
-                        beginAtZero: true
-                      }
-                    },
-                    plugins: {
-                      legend: {
-                        display: false
-                      },
-                      title: {
-                        display: true,
-                        text: 'Distribution of Books per Rating'
-                      }
-                    }
-                  }
-                };
-
-                // render init block Chart
-                const myChart = new Chart(
-                  document.getElementById('myChart'),
-                  config
-                );
-
-
-                // setup Chart2
-                const data2 = {
-                  labels: ['Author1', 'Author2', 'Author3'],
-                  datasets: [{
-                    label: 'Number of Books per Author',
-                    data: [5, 3, 1],
-                    backgroundColor: [
-                      'rgba(20, 20, 235, 0.5)',
-                      'rgba(20, 100, 235, 0.5)',
-                      'rgba(20, 180, 235, 0.5)',
-                    ],
-                    borderColor: [
-                      'rgba(20, 20, 235, 1)',
-                      'rgba(20, 100, 235, 1)',
-                      'rgba(20, 180, 235, 1)',
-                    ],
-                    borderWidth: 1
-                  }]
-                };
-
-                // config Chart2
-                const config2 = {
-                  type: 'bar',
-                  data: data2,
-                  options: {
-                      indexAxis: 'y',
+                  // config Chart
+                  const config = {
+                    type: 'bar',
+                    data: data1,
+                    options: {
                       scales: {
                         y: {
                           beginAtZero: true
-                      }
-                    },
-                    plugins: {
-                      legend: {
-                        display: false
+                        }
                       },
-                      title: {
-                        display: true,
-                        text: 'Number of Books per Top 3 Authors'
+                      plugins: {
+                        legend: {
+                          display: false
+                        },
+                        title: {
+                          display: true,
+                          text: 'Distribution of Books per Rating'
+                        }
                       }
                     }
-                  }
-                };
+                  };
 
-                // render init block Chart2
-                const myChart2 = new Chart(
-                  document.getElementById('myChart2'),
-                  config2
-                );
+                  // render init block Chart
+                  const myChart = new Chart(
+                    document.getElementById('myChart'),
+                    config
+                  );
+                }
+
+                function buildAuthorsChart(books){
+                  // get top 3 authors
+                  const authorCount = getCountNested(books, 'authors')
+                  const authorSorted = [];
+                  for (let author in authorCount) {
+                    authorSorted.push([author, authorCount[author]]);
+                  }
+                  authorSorted.sort((a, b) => {
+                      return a[1] - b[1];
+                  });
+                  authorSorted.reverse()
+                  const topThreeAuthors = authorSorted.slice(0, 3)
+
+                  const data2 = {
+                    labels: topThreeAuthors.map(x => x[0]),
+                    datasets: [{
+                      label: 'Number of Books',
+                      data: topThreeAuthors.map(x => x[1]),
+                      backgroundColor: [
+                        'rgba(20, 20, 235, 0.5)',
+                        'rgba(20, 100, 235, 0.5)',
+                        'rgba(20, 180, 235, 0.5)',
+                      ],
+                      borderColor: [
+                        'rgba(20, 20, 235, 1)',
+                        'rgba(20, 100, 235, 1)',
+                        'rgba(20, 180, 235, 1)',
+                      ],
+                      borderWidth: 1
+                    }]
+                  };
+
+                  // config Chart2
+                  const config2 = {
+                    type: 'bar',
+                    data: data2,
+                    options: {
+                        indexAxis: 'y',
+                        scales: {
+                          y: {
+                            beginAtZero: true
+                        }
+                      },
+                      plugins: {
+                        legend: {
+                          display: false
+                        },
+                        title: {
+                          display: true,
+                          text: 'Number of Books per Top 3 Authors'
+                        }
+                      }
+                    }
+                  };
+
+                  // render init block Chart2
+                  const myChart2 = new Chart(
+                    document.getElementById('myChart2'),
+                    config2
+                  );
+                }
+                
+
+                function buildCharts(books) {
+                  buildRatingsChart(books)
+                  buildAuthorsChart(books)
+                }
+
+                fetch('/api/books')
+                  .then(data => data.json())
+                  .then(books => buildCharts(books))
                 </script>
 
         </SECTION>

@@ -35,22 +35,41 @@ function fillCategories(categories) {
     }
 }
 
-function countCategories(books) {
-    const allCategories = {}
-    for (idx in books) {
-        const book = books[idx]
-        const bookCategory = book.category
-        if (! (bookCategory in allCategories)){
-            allCategories[bookCategory] = 0
+
+function getCount(arr, key) {
+    const counts = {}
+    for (idx in arr) {
+        const dict = arr[idx]
+        const element = dict[key]
+        if (! (element in counts)){
+            counts[element] = 0
         }
-        allCategories[bookCategory] += 1
+        counts[element] += 1
     }
-    return allCategories
+    return counts
 }
+
+
+function getCountNested(arr, key) {
+    const counts = {}
+    for (idx in arr) {
+        const dict = arr[idx]
+        const elementArr = dict[key]
+        for (idx in elementArr) {
+            const element = elementArr[idx]
+            if (! (element in counts)){
+                counts[element] = 0
+            }
+            counts[element] += 1
+        }
+    }
+    return counts
+}
+
 
 function loadCategories(){
     fetch('/api/books')
         .then(data => data.json())
-        .then(books => countCategories(books))
+        .then(books => getCount(books, 'category'))
         .then(categories => fillCategories(categories))
 }
