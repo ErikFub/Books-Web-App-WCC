@@ -2,8 +2,22 @@
 
 window.onload = () => {
     loadCategories();
+    getAuthorDropdown();
+    getCategoryDropdown();
+    document.getElementById("categorydropdown").addEventListener('change', checkNewCategory)
 }
 
+function checkNewCategory(){
+    console.log("listened")
+    const selectedCategory = document.getElementById("categorydropdown").value
+    console.log(selectedCategory)
+    const newCatInput = document.getElementById("newcategory")
+    if (selectedCategory == "New Category") {
+        newCatInput.type = "text"
+    } else {
+        newCatInput.type = "hidden"
+    }
+}
 
 // Add book -----------------------------------------------------------------
 
@@ -38,27 +52,42 @@ function addNewBook() {
 }
 
 
-// Add another author -----------------------------------------------------------
-function createNewElement() {
-	var txtNewInputBox = document.createElement('div');
-	txtNewInputBox.innerHTML = "<select> <option value='test'>Test</option>";
-	document.getElementById("newElementId").appendChild(txtNewInputBox);
+// Add author dropdown -----------------------------------------------------------
+
+function addAuthorDropdown(authors) {
+    const authorsSection = document.getElementById("authorselection")
+	const dropdown = document.createElement('select')
+    for(let i=0; i<authors.length; i++){
+        const authorId = authors[i].id
+        const authorName = authors[i].name
+        const option = document.createElement("option")
+        option.innerHTML = authorName
+        option.value = authorId
+        dropdown.append(option)
+    }
+    authorsSection.append(dropdown)
 }
 
+function getAuthorDropdown(){
+    fetch('/api/authors')
+        .then(data => data.json())
+        .then(authors => addAuthorDropdown(authors))
+}
+ 
+// Add categories dropdown --------------------------------------------------------
 
-// Loading the Data ------------------------------------------------------------
-function fillAuthors(books) {
-    const listofauthors = document.getElementById("getauthors")
-    listofauthors.innerHTML = ''
-    for(let i=0; i<books.length; i++){
-        const author = books[i].author
-        listofauthors.append(author)
+function fillCategoryDropdown(categories) {
+    const categoryDropdown = document.getElementById("categorydropdown")
+    for(let i=0; i<categories.length; i++){
+        const option = document.createElement("option")
+        option.innerHTML = categories[i].category
+        option.value = categories[i].category
+        categoryDropdown.append(option)
     }
 }
 
-function loadAuthors(){
-    fetch('/api/books')
+function getCategoryDropdown(){
+    fetch('/api/categories')
         .then(data => data.json())
-        .then(books => fillAuthors(books))
-        }
- 
+        .then(categories => fillCategoryDropdown(categories))
+}

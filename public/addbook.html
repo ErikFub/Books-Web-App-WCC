@@ -51,13 +51,9 @@
 
             <div>
                 <label for="dropdown">Select a Author:</label><br>
-                
-                <select name="dropdown" id="multipleauthors"><br>
-                    <option id="getauthors">Test</option>
-                </select>
-
-                <input type="button" id="newauthor" value="Add another Author" onclick="createNewElement();"/><br><br>
-                <div id="newElementId"></div>
+                <div id="authorselection">
+                </div>
+                <input type="button" id="newauthor" value="Add another Author" onclick="getAuthorDropdown();"/><br><br>
             </div>
 
             <br><label for="img">Image Link:</label>
@@ -70,15 +66,12 @@
             <input type="text" id="numberrating" name="numberrating" placeholder="..." required>
 
             <label for="dropdown">Category:</label><br>
-            <select name="dropdown" id="category_dropdown">
-                <option value="newcategory">New Category</option>
-                <option value="drama">Drama</option>
-                <option value="romance">Romance</option>
+            <select name="dropdown" id="categorydropdown">
+                <option value="New Category">New Category</option>
             </select>
-            <input type="text" id="category" name="category" placeholder="New Category...">
-
-            <input type="submit" onclick="addNewBook();" value="Add Book" > -->
-            <!-- <button type='button' onclick="addNewBook();">Add Book</button> -->
+            <input type="text" id="newcategory" name="category" placeholder="New Category...">
+            <br>
+            <input type="submit" onclick="addNewBook();" value="Add Book" >
         </form>
         </SECTION>
 
