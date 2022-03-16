@@ -1,9 +1,11 @@
 aside#wishlist-box {
-    margin-top: 15px;
+    margin-top: 0;
     margin-bottom: 15px;
     padding-top: 5px;
     padding-bottom: 5px ;
     background-color: rgb(255, 182, 153);
+    border-radius: 0 0 0 10px;
+    border-top: 1px solid  rgb(243, 173, 146);
 }
 
 aside#wishlist-box > h3 {
@@ -16,6 +18,10 @@ ul#wishlist {
 
 ul#wishlist > li {
     padding-bottom: 8px;
+}
+
+aside#sidebar {
+    border-radius: 0 0 0 0;
 }
 
 /* ========================== BOOKLIST ========================*/

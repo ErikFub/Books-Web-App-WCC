@@ -3,6 +3,7 @@ SECTION {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  text-align: center;
   }
   
   .chartCard {
@@ -16,8 +17,9 @@ SECTION {
   .chartBox {
     width: 600px;
     padding: 20px;
-    border-radius: 20px;
-    border: solid 3px darkblue;
+    border-radius: 10px;
+    box-shadow: 0 0 3px darkblue;
+    background-color: rgb(251, 251, 255);
   }
 
   .space{
