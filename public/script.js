@@ -153,23 +153,9 @@ function toggleWishlist(bookID){
 
 // Book Search -----------------------------------------------------------
 
-function filterBooks(books, searchInput){
-    const filteredBooks = []
-    for (idx in books){
-        const title = books[idx]['title'].toLowerCase()
-        if (title.includes(searchInput.toLowerCase())){
-            filteredBooks.push(books[idx])
-        }
-    }
-    return filteredBooks
-}
-
 function search(){
     const searchInput = document.getElementById('search-input').value
-    fetch('/api/books')
-        .then(data => data.json())
-        .then(books => filterBooks(books, searchInput))
-        .then(filteredBooks => fillBooks(filteredBooks))
+    loadBooks(searchInput)
 }
 
 
