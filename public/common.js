@@ -23,9 +23,16 @@ function toggleSubnav(navID){
 // Sidebar Categories ---------------------------------------------------
 
 function fillCategories(categories) {
+    const categoriesOrdered = Object.keys(categories).sort().reduce(
+        (obj, key) => { 
+          obj[key] = categories[key]; 
+          return obj;
+        }, 
+        {}
+      );
     const categoriesElement = document.getElementById("categories")
-    for (let category in categories) {
-        count = categories[category]
+    for (let category in categoriesOrdered) {
+        count = categoriesOrdered[category]
         const catP = document.createElement("p")
         const catLink = document.createElement("a")
         catLink.href = "/index.html?category=" + category
