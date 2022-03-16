@@ -7,7 +7,8 @@ export interface Book {
     authors: string[],
     image: string,
     rating: number,
-    numberrating: number
+    numberrating: number,
+    category: string
 }
 
 export const books = [

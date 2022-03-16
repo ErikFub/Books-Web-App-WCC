@@ -41,6 +41,7 @@ export function getAllBooks(name: string, category: string, fn:(books:Book[]) =>
               FROM book b
               WHERE b.title LIKE '%' || ? || '%'
                 AND b.category LIKE '%' || ? || '%'
+              ORDER BY b.title
               `
   const params: string [] = [name, category]
   db.all(sql, params, (err: any, rows: any) =>{
@@ -67,23 +68,71 @@ export function getOneBook(id:number, fn:(book:Book|null) => void) {
   })}
 
 
-export function addOneBook(b: Book) {
+export function addOneBook(book: Book, fn: (bookId: number) => void) {
   console.log("In addOneBook:------")
-  console.log(b)
+  console.log(book)
   console.log("--------------------")
-  console.log(JSON.stringify(db.get("SELECT * FROM book")))
   const sql = `
-              INSERT INTO book (title, image, rating, numberrating) VALUES (?,?,?,?)
+              INSERT INTO book (title, image, rating, numberrating, category) VALUES (?,?,?,?,?)
               `
-  const params = [b.title, b.image, b.rating, b.numberrating]
-  db.run(sql, params, (err: any, result: any) => {
+  const params = [book.title, book.image, book.rating, book.numberrating, book.category]
+  db.run(sql, params, function(err: any, result: any){
     if( err ) {
       console.log("Error in database: " + err)
+    } else {
+      fn(this.lastID)
     }
   });
-  // insert one new book into the database
-  // Don't forget to add the relation to authors
-  // The relation to authors is established using the author identifiers
+}
+
+export function createAuthors(book: Book, allAuthors: {id: number, name: string}[], fn: (authorIds: number[]) => void) {
+  const authors: string[] = book.authors
+  const authorIds: number[] = []
+
+  // identify existing vs. newly added authors
+  const newAuthors = []
+  for (const author of authors) {
+    let match = false
+    for (const existingAuthor of allAuthors) {
+      if (existingAuthor.name === author){
+        authorIds.push(existingAuthor.id)
+        match = true
+        break
+      }
+    }
+    if (match === false) { // if author doesn't exist
+      newAuthors.push(author) // push name on array of authors to add
+    }
+  }
+  const placeholders = newAuthors.map((author) => '(?)').join(',');
+  const sql = `INSERT OR REPLACE INTO author (name) VALUES ${placeholders}`
+  db.run(sql, newAuthors, function(err: any, result: any) {
+    if( err ) {
+      if (newAuthors.length > 0){
+        console.log("Error in database: " + err)
+      } else {
+        console.log("No new authors were added")
+        fn(authorIds)
+      }
+    } else {
+      const lastId = this.lastID
+      for(let i = 0; i < newAuthors.length; i++) {
+        authorIds.push(lastId - i)
+      }
+      fn(authorIds)
+    }
+  });
+}
+
+export function createBookAuthorRelation(bookId: number, authorIds: number[]) {
+  for(const authorId of authorIds){
+    const sql = `
+                INSERT INTO author_book (author_id, book_id)
+                VALUES (?,?)
+                `
+    const params = [authorId, bookId]
+    db.run(sql, params)
+  }
 }
 
 export function getAllAuthors(fn:(authors: string[]) => void) {

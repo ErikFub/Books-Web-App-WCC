@@ -57,19 +57,30 @@
             </div>
 
             <br><label for="img">Image Link:</label>
-            <input type="text" id="image" placeholder="https://..." required>
-
-            <label for="rating">Rating (1-5):</label>
-            <input type="text" id="rating" placeholder="..." required>
+            <input type="text" id="image" placeholder="https://..." required pattern="https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)">
+            
+            <div>
+                <label for="rating">Rating (1-5):</label>
+                <br>
+                <select id="rating">
+                    <option value="1">★</option>
+                    <option value="2">★★</option>
+                    <option value="3">★★★</option>
+                    <option value="4">★★★★</option>
+                    <option value="5">★★★★★</option>
+                </select>
+            </div>
+            
+            <br>
 
             <label for="numberrating">Number of Ratings:</label>
-            <input type="text" id="numberrating" placeholder="..." required>
+            <input type="text" id="numberrating" placeholder="..." required pattern="[1-9][0-9]*">
 
             <label for="dropdown">Category:</label><br>
             <select id="categorydropdown">
-                <option value="New Category">New Category</option>
+                <option value="new">New Category</option>
             </select>
-            <input type="text" id="newcategory" placeholder="New Category...">
+            <input type="text" id="newcategory" placeholder="New Category..." required>
             <br>
             <input type="submit" onclick="addNewBook();" value="Add Book" >
         </form>
