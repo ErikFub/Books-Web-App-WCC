@@ -19,3 +19,7 @@ SECTION {
     border-radius: 20px;
     border: solid 3px darkblue;
   }
+
+  .space{
+    margin: 20px 10px;
+  }
