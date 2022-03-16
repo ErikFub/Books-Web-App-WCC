@@ -40,6 +40,11 @@ ul#wishlist > li {
     box-shadow: 0 0 8px rgb(77, 77, 77);
 }
 
+.bookcard .imagecontainer {
+    height: 140px;
+    width: 200px;
+}
+
 .bookcard img.bookcover {
     max-width: 100px;
     max-height: 140px;

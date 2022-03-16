@@ -37,10 +37,13 @@ function createBookcard(book, idx) {
     bookcard.id = bookdID + "-bookcard"
 
     // create image
+    const imageDiv = document.createElement("div")
+    imageDiv.className = "imagecontainer"
     const image = document.createElement("img")
     image.className = "bookcover"
     image.src = imageUrl
-    bookcard.append(image)
+    imageDiv.append(image)
+    bookcard.append(imageDiv)
 
     // create title and author
     const titleAuthorDiv = document.createElement("div")
