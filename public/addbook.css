@@ -3,22 +3,40 @@ h2 {
     font-size: 17;
 }
 
-label {
-    font-size: 12;
+section#book-form {
+  text-align: center;
 }
 
 form {
-    margin: 20px;
-    border-radius: 5px;
-    background-color: #f2f2f2;
-    padding: 20px;
-    width: 550px;
+  margin: 20px;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+  width: 400px;
+  display: inline-block;
+  text-align: left;
+}
+
+div.input-section {
+  border-bottom: 1px solid darkgray;
+  margin-bottom: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+label {
+    font-size: 12;
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgb(82, 82, 82);
 }
 
 input[type=text] {
-    width: 500px;
-    padding: 8px 20px;
-    margin: 10px 0;
+    width: 100%;
+    padding: 8px 10px;
     box-sizing: border-box;
     display: block;
     font-size: 12px;
@@ -27,7 +45,7 @@ input[type=text] {
 
 /*Button to add a Book to the Database*/
 input[type=submit] {
-  background-color: grey;
+  background-color: rgb(0, 168, 0);
   color: white;
   padding: 8px 15px;
   border: none;
@@ -37,12 +55,50 @@ input[type=submit] {
 }
 
 input[type=submit]:hover {
-  background-color: darkgrey;
-  box-shadow: 0 0 8px rgb(77, 77, 77);
+  background-color: green;
+  box-shadow: 0 0 5px rgb(77, 77, 77);
   }
 
 /*Button to add more authors*/
-input[type=button] {
+div.add-option-container {
+  margin: 0;
+}
+
+input[type=button].add-option {
+  background-color: grey;
+  color: white;
+  padding: 4px 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12;
+}
+
+input[type=button].add-option:hover {
+  box-shadow: 0 0 3px rgb(61, 61, 61); 
+}
+
+button.remove-author {
+  color: rgb(209, 0, 0);
+  font-weight: bold;
+  font-size: 15px;
+  background-color: transparent;
+  border: none;
+  float: right;
+  padding-top: 3px;
+  cursor: pointer;
+}
+
+button.remove-author:hover {
+  text-shadow: 1px 1px rgba(255, 0, 0, 0.274);
+}
+
+select.input-dropdown {
+  margin-bottom: 5px;
+  padding: 5px 3px;
+}
+
+select.rating-dropdown {
   margin-bottom: 15px;
 }
 

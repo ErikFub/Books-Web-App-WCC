@@ -43,26 +43,31 @@
             </ASIDE>
         </div>
 
-        <SECTION>
+        <SECTION id="book-form">
         <H2>Fill in the fields to add a Book to the Database</H2>
         <form action="./index.html">
-            <label for="title">Book Title:</label>
-            <input type="text" id="booktitle" placeholder="Title..." required>
-
-            <div>
-                <label for="dropdown">Select a Author:</label><br>
-                <div id="authorselection">
-                </div>
-                <input type="button" id="newauthor" value="Add another Author" onclick="getAuthorDropdown();"/><br><br>
+            <div class="input-section">
+                <label for="title">Title</label>
+                <input type="text" id="booktitle" placeholder="e.g. Ubik" required>
             </div>
 
-            <br><label for="img">Image Link:</label>
-            <input type="text" id="image" placeholder="https://..." required pattern="https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)">
-            
-            <div>
-                <label for="rating">Rating (1-5):</label>
+            <div class="input-section">
+                <label for="dropdown">Author</label><br>
+                <div id="authorselection"></div>
+                <div class="add-option-container">
+                    <input type="button" id="newauthor" class="add-option" value="✚  Add another Author" onclick="getAuthorDropdown(true);"/><br><br>
+                </div>
+            </div>
+
+            <div class="input-section">
+                <label for="img">Image Link</label>
+                <input type="text" id="image" placeholder="e.g. https://website.com/picture.png" required pattern="https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)">
+            </div>
+
+            <div class="input-section">
+                <label for="rating">Rating</label>
                 <br>
-                <select id="rating">
+                <select id="rating" class="input-dropdown rating-dropdown">
                     <option value="1">★</option>
                     <option value="2">★★</option>
                     <option value="3">★★★</option>
@@ -71,18 +76,20 @@
                 </select>
             </div>
             
-            <br>
+            <div class="input-section">
+                <label for="numberrating">Number of Ratings</label>
+                <input type="text" id="numberrating" placeholder="e.g. 254" required pattern="[1-9][0-9]*">
+            </div>
 
-            <label for="numberrating">Number of Ratings:</label>
-            <input type="text" id="numberrating" placeholder="..." required pattern="[1-9][0-9]*">
+            <div class="input-section">
+                <label for="categorydropdown">Category</label><br>
+                <select id="categorydropdown" class="input-dropdown">
+                    <option value="new">New Category</option>
+                </select>
+                <input type="text" id="newcategory" placeholder="e.g. Drama" required>
+            </div>
 
-            <label for="dropdown">Category:</label><br>
-            <select id="categorydropdown">
-                <option value="new">New Category</option>
-            </select>
-            <input type="text" id="newcategory" placeholder="New Category..." required>
-            <br>
-            <input type="submit" onclick="addNewBook();" value="Add Book" >
+            <input type="submit" onclick="addNewBook();" value="✔ Add Book" >
         </form>
         </SECTION>
 

@@ -79,13 +79,27 @@ function addNewBook() {
 
 // Add author dropdown -----------------------------------------------------------
 
-function addAuthorDropdown(authors) {
+function removeAuthor(buttonId) {
+    const dropdownSectionId = buttonId.replace("remove", "author-section")
+    const dropdownSection = document.getElementById(dropdownSectionId)
+    dropdownSection.remove()
+}
+
+
+function addAuthorDropdown(authors, removeButton) {
     const authorsSection = document.getElementById("authorselection")
     const dropdownSection = document.createElement('div')
-    const nExistingAuthors = authorsSection.childElementCount
+    let id = ""
+    if (authorsSection.childElementCount > 0) {
+        const lastAuthorId = authorsSection.lastChild.firstChild.id
+        id = parseInt(lastAuthorId.replace("author-", "")) + 1
+    } else {
+        id = 1
+    }
+    dropdownSection.id = "author-section-" + id
 	const dropdown = document.createElement('select')
-    dropdown.classList = "authordropdown"
-    dropdown.id = "author-" + (nExistingAuthors + 1)
+    dropdown.classList = "authordropdown input-dropdown"
+    dropdown.id = "author-" + id
     const newAuthorOption = document.createElement("option")
     newAuthorOption.innerHTML = "New Author"
     newAuthorOption.value = "new"
@@ -99,18 +113,29 @@ function addAuthorDropdown(authors) {
     }
     const newAuthorInput = document.createElement("input")
     newAuthorInput.type = "text"
-    newAuthorInput.id = "newauthor-" + (nExistingAuthors + 1)
-    newAuthorInput.placeholder = "Author..."
-    dropdown.addEventListener("change", () => {checkNewAuthor(nExistingAuthors + 1)})
+    newAuthorInput.id = "newauthor-" + id
+    newAuthorInput.placeholder = "e.g. J. K. Rowling"
+    dropdown.addEventListener("change", () => {checkNewAuthor(id)})
+
     dropdownSection.append(dropdown)
+
+    if (removeButton === true) {
+        const rButton = document.createElement('button')
+        rButton.className = "remove-author"
+        rButton.id = "remove-" + id
+        rButton.innerHTML = "✖"
+        rButton.onclick = () => removeAuthor(rButton.id)
+        dropdownSection.append(rButton)
+    }
+
     dropdownSection.append(newAuthorInput)
     authorsSection.append(dropdownSection)
 }
 
-function getAuthorDropdown(){
+function getAuthorDropdown(removeButton){
     fetch('/api/authors')
         .then(data => data.json())
-        .then(authors => addAuthorDropdown(authors))
+        .then(authors => addAuthorDropdown(authors, removeButton))
 }
 
 // listener for new author input
