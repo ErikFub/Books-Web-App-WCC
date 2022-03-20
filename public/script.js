@@ -1,13 +1,5 @@
 // Window Functions -----------------------------------------------
 
-function installOtherEventHandlers() {
-    // Events to open and close menus
-
-    // Events to call loadAndFillBooks with a new search value
-
-    // document.getElementById("searchbutton").onclick = applySearch
-}
-
 window.onload = () => {
     loadBooks();
     loadCategories();
@@ -17,8 +9,6 @@ window.onload = () => {
             search()
         }
     });
-
-    installOtherEventHandlers()
 }
 
 

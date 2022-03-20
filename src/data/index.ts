@@ -2,7 +2,7 @@ import {db} from './init'
 import {books, Book} from '../books'
 
 
-export function addAuthors(allBooks: Book[], authorRelations: any, fn:(booksAuthor: Book[]) => void) {
+export function addAuthors(allBooks: Book[], authorRelations: {book_id: number, name: string} [], fn:(booksAuthor: Book[]) => void) {
   const bookAuthors: {[id: number]: string[]} = {}
   for (const relation of authorRelations) {
     const author: string = relation.name
@@ -19,7 +19,7 @@ export function addAuthors(allBooks: Book[], authorRelations: any, fn:(booksAuth
 }
 
 
-export function getAllAuthorRelations(fn:(authorRelations: any) => void) {
+export function getAllAuthorRelations(fn:(authorRelations: {book_id: number, name: string} [] | []) => void) {
   const sql = `
               SELECT ab.book_id, a.name
               FROM author_book ab
@@ -54,7 +54,7 @@ export function getAllBooks(name: string, category: string, fn:(books:Book[]) =>
   })
 }
 
-export function getOneBook(id:number, fn:(book:Book|null) => void) {
+export function getOneBook(id:number, fn:(book: Book | null) => void) {
   const sql = "SELECT * FROM Book WHERE id = ?"
   const params:string[] = [""+id]
   return db.get(sql, params, (err:any, row:any) =>{

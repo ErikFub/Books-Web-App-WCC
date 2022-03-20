@@ -12,9 +12,9 @@ app.use(express.static('public'))
 app.get('/api/books', (req: any, res: any) => {
     const name: string = ( req.query.name || "" ) as string
     const category: string = (req.query.category || "") as string
-    getAllBooks(name, category, (books: any) => {
+    getAllBooks(name, category, (books) => {
         getAllAuthorRelations((authorRelations) => {
-            addAuthors(books, authorRelations, (booksAuthors: any) => {
+            addAuthors(books, authorRelations, (booksAuthors) => {
                 res.send(JSON.stringify(booksAuthors))
             })
         })
@@ -23,8 +23,8 @@ app.get('/api/books', (req: any, res: any) => {
 
 // Getting one book
 app.get('/api/books/:id', (req: any, res: any) => {
-    const bookId = parseInt(req.params.id,10)
-    getOneBook(bookId, (book: any) => {
+    const bookId = parseInt(req.params.id, 10)
+    getOneBook(bookId, (book) => {
         if (book != null) res.send(JSON.stringify(book))
         else {
             res.status(404)
