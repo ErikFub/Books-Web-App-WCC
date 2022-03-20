@@ -7,7 +7,7 @@ export function addAuthors(allBooks: Book[], authorRelations: {book_id: number, 
   for (const relation of authorRelations) {
     const author: string = relation.name
     const bookId: number = relation.book_id
-    if (!(bookId in bookAuthors)) {
+    if ( !(bookId in bookAuthors) ) {
       bookAuthors[bookId] = []
     }
     bookAuthors[bookId].push(author)
@@ -54,24 +54,44 @@ export function getAllBooks(name: string, category: string, fn:(books:Book[]) =>
   })
 }
 
+
+function compressBookData(rows: any[]) {
+  const bookData: Book = {
+    id: rows[0].id,
+    title: rows[0].title,
+    image: rows[0].image,
+    rating: rows[0].rating,
+    numberrating: rows[0].numberrating,
+    authors: [],
+    category: rows[0].category
+  }
+  rows.forEach((r: any) => {
+    const author = r.name
+    bookData.authors.push(author)
+  })
+  return bookData
+}
+
 export function getOneBook(id:number, fn:(book: Book | null) => void) {
-  const sql = "SELECT * FROM Book WHERE id = ?"
+  const sql = `SELECT *
+               FROM book b
+               JOIN author_book ab ON ab.book_id = b.id
+               JOIN author a ON a.id = ab.author_id
+               WHERE b.id = ?`
   const params:string[] = [""+id]
-  return db.get(sql, params, (err:any, row:any) =>{
+  return db.all(sql, params, (err:any, rows:any) =>{
     if( err ) {
       console.log("error in database: " + err)
       fn(null)
     } else {
-      console.log(row)
-      fn(row)
+      const book = compressBookData(rows)
+      fn(book)
     }
-  })}
+  })
+}
 
 
 export function addOneBook(book: Book, fn: (bookId: number) => void) {
-  console.log("In addOneBook:------")
-  console.log(book)
-  console.log("--------------------")
   const sql = `
               INSERT INTO book (title, image, rating, numberrating, category) VALUES (?,?,?,?,?)
               `

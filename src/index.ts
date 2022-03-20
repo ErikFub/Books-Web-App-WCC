@@ -15,7 +15,12 @@ app.get('/api/books', (req: any, res: any) => {
     getAllBooks(name, category, (books) => {
         getAllAuthorRelations((authorRelations) => {
             addAuthors(books, authorRelations, (booksAuthors) => {
-                res.send(JSON.stringify(booksAuthors))
+                if ( booksAuthors.length > 0 ) {
+                    res.send(JSON.stringify(booksAuthors))
+                } else {
+                    res.status(404)
+                    res.send()
+                }
             })
         })
     })
@@ -43,7 +48,25 @@ app.post('/api/books', (req: any, res: any) => {
         addOneBook(JSON.parse(body), (bookId) => {
             getAllAuthors((allAuthors: []) => {
                 createAuthors(JSON.parse(body), allAuthors, (authorIds: number[]) => {
-                    createBookAuthorRelation(bookId, authorIds)
+                    new Promise( () => {
+                        createBookAuthorRelation(bookId, authorIds)
+                    })
+                    .then((value) => {
+                        getOneBook(bookId, (book) => {
+                            if (book != null) {
+                                res.status(201)
+                                res.send(JSON.stringify(book))
+                            }
+                            else {
+                                res.status(404)
+                                res.send()
+                            }
+                        })
+                    })
+                    .then((error) => {
+                        res.status(404)
+                        res.send()
+                    })
                 })
             })
         })
