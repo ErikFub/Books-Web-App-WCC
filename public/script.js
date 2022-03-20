@@ -89,11 +89,7 @@ function createWishlistItem(book, i) {
     return wishlistItem
 }
 
-function fillBooks(books, category) {
-    const booklist = document.getElementById("listofbooks")
-    booklist.innerHTML = ''
-    const wishlist = document.getElementById("wishlist")
-    wishlist.innerHTML = ''
+function createCategoryHeader(category) {
     const categoryHeaderContainer = document.createElement("div")
     categoryHeaderContainer.className = "category-header"
     const categoryHeader = document.createElement("p")
@@ -111,14 +107,30 @@ function fillBooks(books, category) {
         categoryHeaderContainer.append(categoryHeader)
         categoryHeaderContainer.append(showAllButton)
     }
-    booklist.append(categoryHeaderContainer)
-    for(let i=0; i<books.length; i++){
-        const book = books[i]
-        const bookcard = createBookcard(book, i)
-        booklist.append(bookcard)
+    return categoryHeaderContainer
+}
 
-        const wishlistItem = createWishlistItem(book, i)
-        wishlist.append(wishlistItem)
+function fillBooks(books, category) {
+    const booklist = document.getElementById("listofbooks")
+    booklist.innerHTML = ''
+    const wishlist = document.getElementById("wishlist")
+    wishlist.innerHTML = ''
+    const categoryHeaderContainer = createCategoryHeader(category)
+    booklist.append(categoryHeaderContainer)
+    if (books.length > 0) {
+        for(let i=0; i<books.length; i++){
+            const book = books[i]
+            const bookcard = createBookcard(book, i)
+            booklist.append(bookcard)
+
+            const wishlistItem = createWishlistItem(book, i)
+            wishlist.append(wishlistItem)
+        }
+    } else {
+        const noBooks = document.createElement("p")
+        noBooks.id = "no-books"
+        noBooks.innerHTML = "No books to display"
+        booklist.append(noBooks)
     }
 }
 

@@ -57,6 +57,13 @@ button.show-all:hover {
 }
 
 /* Booklist --------------------------------------------------*/
+#no-books {
+    margin-left: 25px;
+    margin-top: 20px;
+    font-weight: bold;
+    color: darkred;
+}
+
 #listofbooks {
     list-style-type: none;
     padding: 0;
