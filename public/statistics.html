@@ -51,18 +51,21 @@
               <div class="chartMenu">
               </div>
               <div class="chartCard">
-
                 <div class="chartBox">
-                  <canvas id="myChart"></canvas>
+                  <canvas id="ratingsChart"></canvas>
                 </div>
                 <div class="space"></div>
-
                 <div class="chartBox">
-                  <canvas id="myChart2"></canvas>
+                  <canvas id="authorsChart"></canvas>
+                </div>
+                <div class="space"></div>
+                <div class="chartBox">
+                  <canvas id="categoriesChart"></canvas>
                 </div>
 
               </div>
               <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+              <script type="text/javascript" src="chartjs-plugin-colorschemes.js"></script>
               <script>
 
               function buildRatingsChart(books){
@@ -113,14 +116,14 @@
                 };
 
                 // render init block Chart
-                const myChart = new Chart(
-                  document.getElementById('myChart'),
+                new Chart(
+                  document.getElementById('ratingsChart'),
                   config
                 );
               }
 
               function buildAuthorsChart(books){
-                // get top 3 authors
+                // get top 5 authors
                 const authorCount = getCountNested(books, 'authors')
                 const authorSorted = [];
                 for (let author in authorCount) {
@@ -130,21 +133,25 @@
                     return a[1] - b[1];
                 });
                 authorSorted.reverse()
-                const topThreeAuthors = authorSorted.slice(0, 3)
+                const topFiveAuthors = authorSorted.slice(0, 5)
 
                 const data2 = {
-                  labels: topThreeAuthors.map(x => x[0]),
+                  labels: topFiveAuthors.map(x => x[0]),
                   datasets: [{
                     label: 'Number of Books',
-                    data: topThreeAuthors.map(x => x[1]),
+                    data: topFiveAuthors.map(x => x[1]),
                     backgroundColor: [
                       'rgba(20, 20, 235, 0.5)',
+                      'rgba(20, 60, 235, 0.5)',
                       'rgba(20, 100, 235, 0.5)',
+                      'rgba(20, 140, 235, 0.5)',
                       'rgba(20, 180, 235, 0.5)',
                     ],
                     borderColor: [
                       'rgba(20, 20, 235, 1)',
+                      'rgba(20, 60, 235, 1)',
                       'rgba(20, 100, 235, 1)',
+                      'rgba(20, 140, 235, 1)',
                       'rgba(20, 180, 235, 1)',
                     ],
                     borderWidth: 1
@@ -168,16 +175,50 @@
                       },
                       title: {
                         display: true,
-                        text: 'Number of Books per Top 3 Authors'
+                        text: 'Number of Books per Top 5 Authors'
                       }
                     }
                   }
                 };
 
                 // render init block Chart2
-                const myChart2 = new Chart(
-                  document.getElementById('myChart2'),
+                new Chart(
+                  document.getElementById('authorsChart'),
                   config2
+                );
+              }
+
+              function buildCategoriesChart(books) {
+                const categoriesCount = getCount(books, 'category')
+                const data3 = {
+                  labels: Object.keys(categoriesCount),
+                  datasets: [{
+                    label: 'My First Dataset',
+                    data: Object.values(categoriesCount),
+                    backgroundColor: [
+                      '#9F113A', '#A0BFB2', '#CD5893', '#19A337', '#BDAB28',
+                      '#577B07','#27B2E3', '#FDBBF8', '#150BB1', '#A9DA66', 
+                      '#0A6A6F', '#601511', '#CACE1C', '#ED651F', '#B9BD9C'],
+                    hoverOffset: 4
+                  }]
+                };
+
+                const config3 = {
+                  type: 'pie',
+                  data: data3,
+                  options: {
+                    plugins: {
+                      title: {
+                        display: true,
+                        text: 'Distribution of Categories'
+                      }
+                    }
+                  }
+                };
+
+                new Chart(
+                  document.getElementById('categoriesChart'),
+                  config3
                 );
               }
               
@@ -185,6 +226,7 @@
               function buildCharts(books) {
                 buildRatingsChart(books)
                 buildAuthorsChart(books)
+                buildCategoriesChart(books)
               }
 
               fetch('/api/books')
