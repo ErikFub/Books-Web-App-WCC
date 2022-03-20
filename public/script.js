@@ -89,11 +89,29 @@ function createWishlistItem(book, i) {
     return wishlistItem
 }
 
-function fillBooks(books) {
+function fillBooks(books, category) {
     const booklist = document.getElementById("listofbooks")
     booklist.innerHTML = ''
     const wishlist = document.getElementById("wishlist")
     wishlist.innerHTML = ''
+    const categoryHeaderContainer = document.createElement("div")
+    categoryHeaderContainer.className = "category-header"
+    const categoryHeader = document.createElement("p")
+    categoryHeader.className = "category-header"
+    if (category == undefined) {
+        categoryHeader.innerHTML = "All Categories"
+        categoryHeaderContainer.append(categoryHeader)
+    } else {
+        console.log(category)
+        categoryHeader.innerHTML = "Category " + category
+        const showAllButton = document.createElement("button")
+        showAllButton.innerHTML = "Show All Books"
+        showAllButton.className = "show-all"
+        showAllButton.onclick = () => {location.href = "/index.html"}
+        categoryHeaderContainer.append(categoryHeader)
+        categoryHeaderContainer.append(showAllButton)
+    }
+    booklist.append(categoryHeaderContainer)
     for(let i=0; i<books.length; i++){
         const book = books[i]
         const bookcard = createBookcard(book, i)
@@ -107,16 +125,24 @@ function fillBooks(books) {
 function loadBooks(name) {
     let query = ""
     if( name != undefined ) {
-        query = `?name=${name}`
+        if (query.length === 0){
+            query = `?name=${name}`
+        } else {
+            query += `&name=${name}`
+        }
     }
     const category = getParameterByName("category")
     if( category != undefined ) {
-        query = `?category=${category}`
+        if (query.length === 0){
+            query = `?category=${category}`
+        } else {
+            query += `&category=${category}`
+        }
     }
     console.log(fetch('/api/books'+query))
     fetch('/api/books'+query)
         .then(data => data.json())
-        .then(books => fillBooks(books))
+        .then(books => fillBooks(books, category))
 }
 
 

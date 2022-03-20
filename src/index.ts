@@ -19,7 +19,7 @@ app.get('/api/books', (req: any, res: any) => {
                     res.send(JSON.stringify(booksAuthors))
                 } else {
                     res.status(404)
-                    res.send()
+                    res.send([])
                 }
             })
         })

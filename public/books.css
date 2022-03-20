@@ -26,6 +26,37 @@ aside#sidebar {
 
 /* ========================== BOOKLIST ========================*/
 
+/* Category header --------------------------------------------*/
+div.category-header {
+    margin-left: 25px;
+}
+p.category-header {
+    display: inline-block;
+    font-weight: bold;
+    color: rgb(105, 105, 105);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+button.show-all {
+    display: inline-block;
+    border: none;
+    margin-left: 20px;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 4px 8px;
+    background-color: rgb(235, 235, 235);
+    color: rgb(105, 105, 105);
+    border-radius: 3px;
+    cursor: pointer;
+    justify-content: center;
+}
+
+button.show-all:hover {
+    box-shadow: 0 0 2px rgb(105, 105, 105);
+}
+
+/* Booklist --------------------------------------------------*/
 #listofbooks {
     list-style-type: none;
     padding: 0;
