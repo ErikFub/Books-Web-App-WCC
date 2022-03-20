@@ -1,3 +1,4 @@
+// make sure that when menu dropdown is opened, it gets closed if user clicks somewhere else
 window.onclick = function(e) {
     if (!e.target.matches('.sn')) {
         const navItems = ['menu']
@@ -23,6 +24,7 @@ function toggleSubnav(navID){
 // Sidebar Categories ---------------------------------------------------
 
 function fillCategories(categories) {
+    // Order categories alphabetically
     const categoriesOrdered = Object.keys(categories).sort().reduce(
         (obj, key) => { 
           obj[key] = categories[key]; 
@@ -31,6 +33,7 @@ function fillCategories(categories) {
         {}
       );
     const categoriesElement = document.getElementById("categories")
+    // create link for each category, also displaying the count
     for (let category in categoriesOrdered) {
         count = categoriesOrdered[category]
         const catP = document.createElement("p")

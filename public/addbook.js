@@ -8,6 +8,7 @@ window.onload = () => {
 }
 
 function checkNewCategory(){
+    // if the category dropdown changes, check if the value equals "new"; if no, hide the "new category" input field 
     const selectedCategory = document.getElementById("categorydropdown").value
     const newCatInput = document.getElementById("newcategory")
     if (selectedCategory == "new") {
@@ -22,9 +23,6 @@ function checkNewCategory(){
 // Add book -----------------------------------------------------------------
 
 function addNewBook() {
-    //confirm("Book was added to the Database")
-    console.log("addNewBook triggered")
-
     // get array of authors
     let authors = []
     const authorElements = document.getElementsByClassName("authordropdown")
@@ -33,7 +31,9 @@ function addNewBook() {
         if (dropdown.value !== "new") {
             authors.push(dropdown.value)
         } else {
+            // get the id of the associated input text field
             const newAuthorInputId = dropdown.id.replace('author', 'newauthor')
+            // get value of input text field
             const newAuthorInput = document.getElementById(newAuthorInputId).value
             if (newAuthorInput !== '') {
                 authors.push(newAuthorInput)
@@ -54,15 +54,17 @@ function addNewBook() {
     // construct book data
     const book = {
         title: document.getElementById("booktitle").value,
-        authors: [...new Set(authors)],
+        authors: [...new Set(authors)], // only use unique authors
         image: document.getElementById("image").value,
         rating: document.getElementById("rating").value,
         numberrating: document.getElementById("numberrating").value,
         category: categoryIn
     }
 
+    // check if some value or authors were left empty
     const missingInput = Object.values(book).includes('') || authors.length === 0
     if (missingInput) {
+        alert("At least one input field was not filled. Book was not added to the Database.")
         console.log("Adding books aborted due to misssing input")
     } else {
         // issue post request
@@ -77,10 +79,14 @@ function addNewBook() {
 }
 
 
-// Add author dropdown -----------------------------------------------------------
+// Authors Section -----------------------------------------------------------
 
+// Option to remove author input
 function removeAuthor(buttonId) {
+    // get id of section that is associated to clicked button
     const dropdownSectionId = buttonId.replace("remove", "author-section")
+
+    // remove that section
     const dropdownSection = document.getElementById(dropdownSectionId)
     dropdownSection.remove()
 }
@@ -91,6 +97,7 @@ function addAuthorDropdown(authors, removeButton) {
     const dropdownSection = document.createElement('div')
     let id = ""
     if (authorsSection.childElementCount > 0) {
+        // define id for author input by incrementing highest existing author input id by one
         const lastAuthorId = authorsSection.lastChild.firstChild.id
         id = parseInt(lastAuthorId.replace("author-", "")) + 1
     } else {
@@ -100,10 +107,12 @@ function addAuthorDropdown(authors, removeButton) {
 	const dropdown = document.createElement('select')
     dropdown.classList = "authordropdown input-dropdown"
     dropdown.id = "author-" + id
+    // Add option for new author to dropdown
     const newAuthorOption = document.createElement("option")
     newAuthorOption.innerHTML = "New Author"
     newAuthorOption.value = "new"
     dropdown.append(newAuthorOption)
+    // Add all authors retrieved from /api/authors to dropdown
     for(let i=0; i<authors.length; i++){
         const authorName = authors[i].name
         const option = document.createElement("option")
@@ -140,6 +149,7 @@ function getAuthorDropdown(removeButton){
 
 // listener for new author input
 function checkNewAuthor(dropdownId) {
+    // if the author dropdown changes, check if the value equals "new"; if no, hide the "new author" input field
     const selectedAuthor = document.getElementById("author-" + dropdownId).value
     const newAuthorInput = document.getElementById("newauthor-" + dropdownId)
     if (selectedAuthor == "new") {
@@ -153,6 +163,7 @@ function checkNewAuthor(dropdownId) {
 
 function fillCategoryDropdown(categories) {
     const categoryDropdown = document.getElementById("categorydropdown")
+    // create an option for each category
     for(let i=0; i<categories.length; i++){
         const option = document.createElement("option")
         option.innerHTML = categories[i].category

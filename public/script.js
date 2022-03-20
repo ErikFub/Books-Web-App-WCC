@@ -90,6 +90,7 @@ function createWishlistItem(book, i) {
 }
 
 function createCategoryHeader(category) {
+    // create a header on the index page that shows whether al books are displayed or only for a certain category
     const categoryHeaderContainer = document.createElement("div")
     categoryHeaderContainer.className = "category-header"
     const categoryHeader = document.createElement("p")
@@ -98,8 +99,8 @@ function createCategoryHeader(category) {
         categoryHeader.innerHTML = "All Categories"
         categoryHeaderContainer.append(categoryHeader)
     } else {
-        console.log(category)
         categoryHeader.innerHTML = "Category " + category
+        // add a button to return to all other books
         const showAllButton = document.createElement("button")
         showAllButton.innerHTML = "Show All Books"
         showAllButton.className = "show-all"
@@ -117,6 +118,8 @@ function fillBooks(books, category) {
     wishlist.innerHTML = ''
     const categoryHeaderContainer = createCategoryHeader(category)
     booklist.append(categoryHeaderContainer)
+
+    // if there is at least one book to display, load them into the bookcards
     if (books.length > 0) {
         for(let i=0; i<books.length; i++){
             const book = books[i]
@@ -126,6 +129,8 @@ function fillBooks(books, category) {
             const wishlistItem = createWishlistItem(book, i)
             wishlist.append(wishlistItem)
         }
+
+    // else show a message that there are no books to display
     } else {
         const noBooks = document.createElement("p")
         noBooks.id = "no-books"

@@ -3,6 +3,7 @@ import {books, Book} from '../books'
 
 
 export function addAuthors(allBooks: Book[], authorRelations: {book_id: number, name: string} [], fn:(booksAuthor: Book[]) => void) {
+  // matches all books with all existing author relations to fill the authors attribute of each book
   const bookAuthors: {[id: number]: string[]} = {}
   for (const relation of authorRelations) {
     const author: string = relation.name
@@ -20,6 +21,7 @@ export function addAuthors(allBooks: Book[], authorRelations: {book_id: number, 
 
 
 export function getAllAuthorRelations(fn:(authorRelations: {book_id: number, name: string} [] | []) => void) {
+  // gets all the connections of author names to book ids
   const sql = `
               SELECT ab.book_id, a.name
               FROM author_book ab
@@ -36,6 +38,7 @@ export function getAllAuthorRelations(fn:(authorRelations: {book_id: number, nam
 }
 
 export function getAllBooks(name: string, category: string, fn:(books:Book[]) => void) {
+  // gets all books filtered by passed name and catrgory
   const sql = `
               SELECT *
               FROM book b
@@ -56,6 +59,8 @@ export function getAllBooks(name: string, category: string, fn:(books:Book[]) =>
 
 
 function compressBookData(rows: any[]) {
+  /*if entry for book exists more than one time (due there being more than one authors for it),
+    compress that data into one book entry which contains all the authors in an array*/
   const bookData: Book = {
     id: rows[0].id,
     title: rows[0].title,
@@ -131,10 +136,13 @@ export function createAuthors(book: Book, allAuthors: {id: number, name: string}
       if (newAuthors.length > 0){
         console.log("Error in database: " + err)
       } else {
+        // if there are no authors that need to be added, the (partially empty) SQL statement throws an error
+        // but if we are sure there are no new authors, this is no problem
         console.log("No new authors were added")
         fn(authorIds)
       }
     } else {
+      // infer the author IDs of added authors by using auto increment logic and add them to the IDs of exisiting authors
       const lastId = this.lastID
       for(let i = 0; i < newAuthors.length; i++) {
         authorIds.push(lastId - i)
@@ -145,7 +153,8 @@ export function createAuthors(book: Book, allAuthors: {id: number, name: string}
 }
 
 export function createBookAuthorRelation(bookId: number, authorIds: number[]) {
-  for(const authorId of authorIds){
+  // for each book / author combination, add a row to author_book table
+  for( const authorId of authorIds ) {
     const sql = `
                 INSERT INTO author_book (author_id, book_id)
                 VALUES (?,?)

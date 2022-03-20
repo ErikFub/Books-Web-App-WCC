@@ -12,12 +12,16 @@ app.use(express.static('public'))
 app.get('/api/books', (req: any, res: any) => {
     const name: string = ( req.query.name || "" ) as string
     const category: string = (req.query.category || "") as string
+    // get all books (without authors), filtered for passed name and category
     getAllBooks(name, category, (books) => {
+        // ... then get all authors
         getAllAuthorRelations((authorRelations) => {
+            // ... then add the authors the books
             addAuthors(books, authorRelations, (booksAuthors) => {
+                // if the resulting Object contains values, send those as response
                 if ( booksAuthors.length > 0 ) {
                     res.send(JSON.stringify(booksAuthors))
-                } else {
+                } else { // else send an empty aray and an error status code
                     res.status(404)
                     res.send([])
                 }
@@ -45,24 +49,32 @@ app.post('/api/books', (req: any, res: any) => {
     req
     .on('data', (data: any) => body += data)
     .on('end', () => {
+        // add the book data (no author data added yet)
         addOneBook(JSON.parse(body), (bookId) => {
+            // get all existing authors to understand which of the book's authors are not yet in the DB
             getAllAuthors((allAuthors: []) => {
+                // create the new authors (in author table)
                 createAuthors(JSON.parse(body), allAuthors, (authorIds: number[]) => {
+                    // create the relation between books and authors
                     new Promise( () => {
                         createBookAuthorRelation(bookId, authorIds)
                     })
+                    // after creating the relation, if the creation was succesfull...
                     .then((value) => {
+                        // ... get the data for the newly added book (based on book ID assigned in first step)
                         getOneBook(bookId, (book) => {
+                            // if there is data, send the data as response alongside response code 201
                             if (book != null) {
                                 res.status(201)
                                 res.send(JSON.stringify(book))
                             }
-                            else {
+                            else { // else, send an error response code and an empty response
                                 res.status(404)
                                 res.send()
                             }
                         })
                     })
+                    // if the creation was not successful, send an error response code and an empty response
                     .then((error) => {
                         res.status(404)
                         res.send()
